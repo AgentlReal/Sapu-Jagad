@@ -23,13 +23,15 @@ public class UIManager : MonoBehaviour
     private VisualElement wordContainer;
     private Label miniTimerLabel;
     private Label currentSentenceLabel;
+    private Label hintLabel;
 
     private List<string> targetWords;
     private List<string> currentAttempt;
     private float miniTimer = 10f;
+    private NPCBehavior currentNPC;
 
     private Dictionary<GameObject, VisualElement> minimapIcons = new Dictionary<GameObject, VisualElement>();
-    private float mapScale = 5f; // Units per pixel approx
+    private float mapScale = 5f;
 
     private void Awake()
     {
@@ -48,7 +50,6 @@ public class UIManager : MonoBehaviour
         cleanlinessLabel = root.Q<Label>("Cleanliness");
         minimapRoot = root.Q<VisualElement>("Minimap");
 
-        // Instantiate Mini-game Overlay and hide it
         if (miniGameAsset != null)
         {
             miniGameOverlay = miniGameAsset.Instantiate();
@@ -61,6 +62,7 @@ public class UIManager : MonoBehaviour
             wordContainer = miniGameOverlay.Q<VisualElement>("WordContainer");
             miniTimerLabel = miniGameOverlay.Q<Label>("MiniTimer");
             currentSentenceLabel = miniGameOverlay.Q<Label>("CurrentSentence");
+            hintLabel = miniGameOverlay.Q<Label>("Hint");
         }
 
         Debug.Log("UIManager Started. HUD Labels: " + (timerLabel != null));
@@ -95,13 +97,10 @@ public class UIManager : MonoBehaviour
     private void UpdateMinimap()
     {
         if (minimapRoot == null) return;
-
-        // Simple approach: Find all objects with relevant tags
         UpdateIconsForTag("Player", Color.green, 6);
         UpdateIconsForTag("Trash", new Color(0.5f, 0.25f, 0), 4);
         UpdateIconsForTag("NPC", Color.magenta, 6);
 
-        // Remove destroyed objects
         var toRemove = minimapIcons.Keys.Where(k => k == null).ToList();
         foreach (var k in toRemove)
         {
@@ -127,23 +126,27 @@ public class UIManager : MonoBehaviour
                 minimapRoot.Add(icon);
                 minimapIcons[obj] = icon;
             }
-
             var pos = obj.transform.position;
-            // Center is (75, 75) in the 150x150 box
             icon.style.left = 75f + (pos.x * mapScale);
             icon.style.top = 75f - (pos.y * mapScale);
         }
     }
 
-    public void StartMiniGame(TeguranData data)
+    public void StartMiniGame(TeguranData data, NPCBehavior npc)
     {
         if (miniGameOverlay == null) return;
 
+        currentNPC = npc;
         GameManager.Instance.isInteracting = true;
         miniGameOverlay.style.display = DisplayStyle.Flex;
         miniTimer = 10f;
         currentAttempt = new List<string>();
         currentSentenceLabel.text = "";
+        
+        if (hintLabel != null)
+        {
+            hintLabel.text = "Hint: " + data.fullSentence;
+        }
 
         targetWords = data.fullSentence.Split(' ', System.StringSplitOptions.RemoveEmptyEntries).ToList();
         List<string> scrambled = targetWords.OrderBy(x => Random.value).ToList();
@@ -183,9 +186,15 @@ public class UIManager : MonoBehaviour
         {
             Debug.Log("Mini Game Fail!");
             GameManager.Instance.ModifyEmpathy(-10);
+            if (currentNPC != null)
+            {
+                var player = GameObject.Find("Player").GetComponent<SapuJagad.PlayerController>();
+                currentNPC.ApplyPenalty(player);
+            }
         }
         
         miniGameOverlay.style.display = DisplayStyle.None;
         GameManager.Instance.isInteracting = false;
+        currentNPC = null;
     }
 }

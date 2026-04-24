@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     public List<NPCData> npcTypes;
     public GameObject npcPrefab;
 
-    public float trashSpawnRate = 2f;
+    public int initialTrashCount = 20;
     public float npcSpawnIntervalMin = 30f;
     public float npcSpawnIntervalMax = 60f;
 
@@ -18,17 +18,14 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SpawnTrashRoutine());
+        SpawnInitialTrash();
         StartCoroutine(SpawnNPCRoutine());
     }
 
-    private IEnumerator SpawnTrashRoutine()
+    private void SpawnInitialTrash()
     {
-        while (GameManager.Instance != null && !GameManager.Instance.isGameOver)
+        for (int i = 0; i < initialTrashCount; i++)
         {
-            yield return new WaitForSeconds(trashSpawnRate);
-            if (GameManager.Instance.isInteracting) continue;
-
             Vector2 spawnPos = new Vector2(
                 Random.Range(spawnArea.xMin, spawnArea.xMax),
                 Random.Range(spawnArea.yMin, spawnArea.yMax)
@@ -66,7 +63,6 @@ public class Spawner : MonoBehaviour
         activeNPCs.Add(npc);
     }
 
-
     private Vector2 GetPerimeterSpawnPos()
     {
         int edge = Random.Range(0, 4);
@@ -81,5 +77,8 @@ public class Spawner : MonoBehaviour
         return new Vector2(x, y);
     }
 
-        public void OnNPCRemoved(GameObject npc) {}
+    public void OnNPCRemoved(GameObject npc)
+    {
+        activeNPCs.Remove(npc);
+    }
 }

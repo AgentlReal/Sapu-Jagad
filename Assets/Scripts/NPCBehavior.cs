@@ -8,11 +8,18 @@ public class NPCBehavior : MonoBehaviour
     private float trashTimer = 0f;
 
     private static GameObject _trashPrefab;
+    private SpriteRenderer sr;
+
+    private void Awake()
+    {
+        sr = GetComponent<SpriteRenderer>();
+    }
 
     private void Start()
     {
         if (data != null)
         {
+            ApplyNPCData();
             trashTimer = data.trashDropRate;
         }
 
@@ -21,6 +28,12 @@ public class NPCBehavior : MonoBehaviour
             var spawner = GameObject.FindObjectsByType<Spawner>(FindObjectsSortMode.None)[0];
             _trashPrefab = spawner.trashPrefab;
         }
+    }
+
+    public void ApplyNPCData()
+    {
+        if (data == null || sr == null) return;
+        sr.sprite = data.sprite;
     }
 
     private void Update()
@@ -52,20 +65,22 @@ public class NPCBehavior : MonoBehaviour
         if (interacted || data == null || data.dialogueOptions == null || data.dialogueOptions.Count == 0) return;
 
         TeguranData selected = data.dialogueOptions[Random.Range(0, data.dialogueOptions.Count)];
-        UIManager.Instance.StartMiniGame(selected);
+        UIManager.Instance.StartMiniGame(selected, this);
         
         interacted = true; 
     }
 
     public void ApplyPenalty(SapuJagad.PlayerController player)
     {
+        if (player == null) return;
+        
+        Debug.Log("Applying penalty from " + data.npcName + " (" + data.type + ")");
         switch (data.type)
         {
             case NPCType.IbuIbu:
                 player.ApplyStun(7f);
                 break;
             case NPCType.AnakKecil:
-                // Spawn 5 trash around player
                 for(int i=0; i<5; i++) {
                     Vector3 offset = Random.insideUnitCircle * 2f;
                     Instantiate(_trashPrefab, player.transform.position + offset, Quaternion.identity);
