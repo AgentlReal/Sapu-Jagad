@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8dcda533a2f38841a87871140a94336, type: 3}
+  m_Name: NPC_Ormas
+  m_EditorClassIdentifier: Assembly-CSharp::NPCData
+  type: 2
+  npcName: Oknum Ormas
+  sprite: {fileID: 4713483555822313199, guid: 7945c41f10abba04fb50aac668655394, type: 3}
+  moveSpeed: 1.5
+  trashDropRate: 10
+  penaltyDuration: 10
+  dialogueOptions:
+  - {fileID: 11400000, guid: 589ea428009ac824a9b04e510d39c4ab, type: 2}

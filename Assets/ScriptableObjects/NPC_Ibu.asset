@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8dcda533a2f38841a87871140a94336, type: 3}
+  m_Name: NPC_Ibu
+  m_EditorClassIdentifier: Assembly-CSharp::NPCData
+  type: 0
+  npcName: Ibu-ibu
+  sprite: {fileID: -919159272332909484, guid: b6bfd7ac75f575e45b8942b1d531c483, type: 3}
+  moveSpeed: 2
+  trashDropRate: 8
+  penaltyDuration: 7
+  dialogueOptions:
+  - {fileID: 11400000, guid: c647257e7e8fcdf49a6734a1ded6d8d4, type: 2}

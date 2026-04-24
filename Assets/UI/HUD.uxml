@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="HUD" style="flex-grow: 1; padding: 20px;">
+        <ui:VisualElement name="TopBar" style="flex-direction: row; justify-content: space-between; background-color: rgba(0, 0, 0, 0.8); padding: 10px;">
+            <ui:Label name="Timer" text="05:00" style="font-size: 40px; color: white; -unity-font-style: bold;" />
+            <ui:Label name="Empathy" text="Empati: 100" style="font-size: 40px; color: white; -unity-font-style: bold;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="BottomBar" style="position: absolute; bottom: 20px; left: 20px; background-color: rgba(0, 0, 0, 0.8); padding: 10px;">
+            <ui:Label name="Cleanliness" text="Kebersihan: 0%" style="font-size: 40px; color: white; -unity-font-style: bold;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Minimap" style="position: absolute; top: 60px; left: 20px; width: 150px; height: 150px; background-color: rgba(0, 0, 0, 0.5); border-width: 2px; border-color: white;" />
+    </ui:VisualElement>
+</ui:UXML>
