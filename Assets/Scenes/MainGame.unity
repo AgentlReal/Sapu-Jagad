@@ -173,7 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f6974cf4185184ea13b13e05eaee67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
-  hudAsset: {fileID: 9197481963319205126, guid: e122b36b9c1b4f9459f08492a2bfe012, type: 3}
   miniGameAsset: {fileID: 9197481963319205126, guid: d7bf032d052ce764e902ffae9644dd15, type: 3}
 --- !u!114 &297662718
 MonoBehaviour:
@@ -188,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   gameDuration: 300
-  currentTime: 0
+  currentTime: 300
   totalTrashSpawned: 0
   trashPicked: 0
   empathyScore: 100
