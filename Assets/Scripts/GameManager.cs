@@ -18,13 +18,18 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-    }
-
-    private void Start()
-    {
-        currentTime = gameDuration;
+        if (Instance == null) 
+        {
+            Instance = this;
+            // Force reset state to prevent Inspector-induced freezes
+            isGameOver = false;
+            isInteracting = false;
+            currentTime = gameDuration;
+        }
+        else 
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
@@ -61,8 +66,14 @@ public class GameManager : MonoBehaviour
 
     private void EndGame()
     {
+        if (isGameOver) return; // Prevent double trigger
+        
         isGameOver = true;
         Debug.Log("Game Over! Cleanliness: " + GetCleanlinessPercentage() + "%, Empathy: " + empathyScore);
-        // Show evaluation panel
+        
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.ShowEvaluation(GetCleanlinessPercentage(), empathyScore);
+        }
     }
 }

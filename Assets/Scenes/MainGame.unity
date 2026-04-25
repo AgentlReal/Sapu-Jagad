@@ -174,6 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   miniGameAsset: {fileID: 9197481963319205126, guid: d7bf032d052ce764e902ffae9644dd15, type: 3}
+  evaluationAsset: {fileID: 9197481963319205126, guid: 0726ae6ea00ccaf45a36272e9001927f, type: 3}
 --- !u!114 &297662718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 281305f3a6cfd7e4ab3e8503f8280d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  gameDuration: 300
+  gameDuration: 40
   currentTime: 300
   totalTrashSpawned: 0
   trashPicked: 0
@@ -272,17 +273,17 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -1955448553306655712, guid: 84a008d4bdc8b864d95f6884579375f3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
 --- !u!4 &399378368
 Transform:
@@ -621,6 +622,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1244226388415652550, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1244226388415652550, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1244226388415652550, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2127527312171382440, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

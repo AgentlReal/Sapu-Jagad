@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="EvaluationOverlay" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.85); justify-content: center; align-items: center;">
+        <ui:VisualElement name="Panel" style="width: 500px; padding: 40px; background-color: white; border-radius: 15px; align-items: center;">
+            <ui:Label name="ResultTitle" text="Game Over" style="font-size: 32px; -unity-font-style: bold; color: black; margin-bottom: 10px;" />
+            <ui:Label name="ResultMessage" text="Evaluating your performance..." style="font-size: 20px; color: #333; -unity-text-align: middle-center; margin-bottom: 25px; white-space: normal;" />
+            
+            <ui:VisualElement name="Stats" style="width: 100%; margin-bottom: 30px;">
+                <ui:Label name="FinalCleanliness" text="Kebersihan: 0%" style="font-size: 18px; color: black;" />
+                <ui:Label name="FinalEmpathy" text="Empati: 0" style="font-size: 18px; color: black;" />
+            </ui:VisualElement>
+
+            <ui:Button name="RestartButton" text="Main Lagi" style="width: 200px; height: 50px; font-size: 20px; background-color: #228B22; color: white; border-radius: 10px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

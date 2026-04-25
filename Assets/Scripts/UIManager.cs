@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,6 +9,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     public VisualTreeAsset miniGameAsset;
+    public VisualTreeAsset evaluationAsset;
 
     private UIDocument uiDocument;
     private VisualElement root;
@@ -25,6 +27,14 @@ public class UIManager : MonoBehaviour
     private Label currentSentenceLabel;
     private Label hintLabel;
 
+    // Evaluation Elements
+    private VisualElement evaluationOverlay;
+    private Label resultTitle;
+    private Label resultMessage;
+    private Label finalCleanliness;
+    private Label finalEmpathy;
+    private Button restartButton;
+
     private List<string> targetWords;
     private List<string> currentAttempt;
     private float miniTimer = 10f;
@@ -37,27 +47,45 @@ public class UIManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-
+        
         uiDocument = GetComponent<UIDocument>();
     }
 
     private void Start()
     {
+        InitializeUI();
+    }
+
+    private void InitializeUI()
+    {
+        if (uiDocument == null) uiDocument = GetComponent<UIDocument>();
         root = uiDocument.rootVisualElement;
         
+        if (root == null) return;
+
         timerLabel = root.Q<Label>("Timer");
         empathyLabel = root.Q<Label>("Empathy");
         cleanlinessLabel = root.Q<Label>("Cleanliness");
         minimapRoot = root.Q<VisualElement>("Minimap");
 
-        if (miniGameAsset != null)
+        InitializeOverlays();
+    }
+
+    private void InitializeOverlays()
+    {
+        if (root == null) return;
+
+        // Mini-game Overlay
+        if (miniGameAsset != null && miniGameOverlay == null)
         {
             miniGameOverlay = miniGameAsset.Instantiate();
             miniGameOverlay.style.position = Position.Absolute;
             miniGameOverlay.style.width = Length.Percent(100);
             miniGameOverlay.style.height = Length.Percent(100);
-            miniGameOverlay.style.display = DisplayStyle.None;
             root.Add(miniGameOverlay);
+            
+            var actualOverlay = miniGameOverlay.Q("MiniGameOverlay");
+            if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.None;
 
             wordContainer = miniGameOverlay.Q<VisualElement>("WordContainer");
             miniTimerLabel = miniGameOverlay.Q<Label>("MiniTimer");
@@ -65,31 +93,64 @@ public class UIManager : MonoBehaviour
             hintLabel = miniGameOverlay.Q<Label>("Hint");
         }
 
-        Debug.Log("UIManager Started. HUD Labels: " + (timerLabel != null));
+        // Evaluation Overlay
+        if (evaluationAsset != null && evaluationOverlay == null)
+        {
+            evaluationOverlay = evaluationAsset.Instantiate();
+            evaluationOverlay.style.position = Position.Absolute;
+            evaluationOverlay.style.width = Length.Percent(100);
+            evaluationOverlay.style.height = Length.Percent(100);
+            root.Add(evaluationOverlay);
+
+            var actualOverlay = evaluationOverlay.Q("EvaluationOverlay");
+            if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.None;
+
+            resultTitle = evaluationOverlay.Q<Label>("ResultTitle");
+            resultMessage = evaluationOverlay.Q<Label>("ResultMessage");
+            finalCleanliness = evaluationOverlay.Q<Label>("FinalCleanliness");
+            finalEmpathy = evaluationOverlay.Q<Label>("FinalEmpathy");
+            restartButton = evaluationOverlay.Q<Button>("RestartButton");
+            
+            if (restartButton != null)
+                restartButton.clicked += RestartGame;
+        }
     }
 
     private void Update()
     {
-        if (GameManager.Instance != null && timerLabel != null)
+        if (root == null)
         {
-            float time = GameManager.Instance.currentTime;
-            int mins = Mathf.FloorToInt(time / 60);
-            int secs = Mathf.FloorToInt(time % 60);
-            timerLabel.text = string.Format("{0:00}:{1:00}", mins, secs);
+            InitializeUI();
+            return;
+        }
 
-            empathyLabel.text = "Empati: " + GameManager.Instance.empathyScore;
-            cleanlinessLabel.text = "Kebersihan: " + Mathf.FloorToInt(GameManager.Instance.GetCleanlinessPercentage()) + "%";
+        if (GameManager.Instance != null && !GameManager.Instance.isGameOver)
+        {
+            if (timerLabel != null)
+            {
+                float time = Mathf.Max(0, GameManager.Instance.currentTime);
+                int mins = Mathf.FloorToInt(time / 60);
+                int secs = Mathf.FloorToInt(time % 60);
+                timerLabel.text = string.Format("{0:00}:{1:00}", mins, secs);
+            }
+
+            if (empathyLabel != null)
+                empathyLabel.text = "Empati: " + GameManager.Instance.empathyScore;
+            
+            if (cleanlinessLabel != null)
+                cleanlinessLabel.text = "Kebersihan: " + Mathf.FloorToInt(GameManager.Instance.GetCleanlinessPercentage()) + "%";
         }
 
         UpdateMinimap();
 
-        if (miniGameOverlay != null && miniGameOverlay.style.display == DisplayStyle.Flex)
+        if (miniGameOverlay != null)
         {
-            miniTimer -= Time.deltaTime;
-            miniTimerLabel.text = Mathf.CeilToInt(miniTimer).ToString();
-            if (miniTimer <= 0)
+            var actualOverlay = miniGameOverlay.Q("MiniGameOverlay");
+            if (actualOverlay != null && actualOverlay.style.display == DisplayStyle.Flex)
             {
-                EndMiniGame(false);
+                miniTimer -= Time.deltaTime;
+                if (miniTimerLabel != null) miniTimerLabel.text = Mathf.CeilToInt(miniTimer).ToString();
+                if (miniTimer <= 0) EndMiniGame(false);
             }
         }
     }
@@ -97,15 +158,16 @@ public class UIManager : MonoBehaviour
     private void UpdateMinimap()
     {
         if (minimapRoot == null) return;
-        UpdateIconsForTag("Player", Color.green, 6);
+
+        UpdateIconsForTag("Player", Color.green, 8);
         UpdateIconsForTag("Trash", new Color(0.5f, 0.25f, 0), 4);
-        UpdateIconsForTag("NPC", Color.magenta, 6);
+        UpdateIconsForTag("NPC", Color.magenta, 8);
 
         var toRemove = minimapIcons.Keys.Where(k => k == null).ToList();
         foreach (var k in toRemove)
         {
             var icon = minimapIcons[k];
-            if (icon.parent != null) icon.parent.Remove(icon);
+            if (icon != null && icon.parent != null) icon.parent.Remove(icon);
             minimapIcons.Remove(k);
         }
     }
@@ -126,27 +188,50 @@ public class UIManager : MonoBehaviour
                 minimapRoot.Add(icon);
                 minimapIcons[obj] = icon;
             }
-            var pos = obj.transform.position;
+
+            Vector3 pos = obj.transform.position;
             icon.style.left = 75f + (pos.x * mapScale);
             icon.style.top = 75f - (pos.y * mapScale);
         }
     }
 
+    public void ShowEvaluation(float cleanliness, float empathy)
+    {
+        if (evaluationOverlay == null) InitializeOverlays();
+        if (evaluationOverlay == null) return;
+
+        bool win = cleanliness >= 70f && empathy >= 80f;
+
+        if (resultTitle != null) resultTitle.text = win ? "Pahlawan Kebersihan!" : "Gagal Menjaga Taman";
+        if (resultMessage != null) resultMessage.text = win ? "Selamat! Pak Darmo berhasil menjaga kebersihan dan hati warga." : "Maaf, taman masih kotor atau warga merasa tidak nyaman.";
+        if (finalCleanliness != null) finalCleanliness.text = "Kebersihan Akhir: " + Mathf.FloorToInt(cleanliness) + "%";
+        if (finalEmpathy != null) finalEmpathy.text = "Empati Akhir: " + Mathf.FloorToInt(empathy);
+
+        var actualOverlay = evaluationOverlay.Q("EvaluationOverlay");
+        if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.Flex;
+    }
+
+    private void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     public void StartMiniGame(TeguranData data, NPCBehavior npc)
     {
+        if (miniGameOverlay == null) InitializeOverlays();
         if (miniGameOverlay == null) return;
 
         currentNPC = npc;
         GameManager.Instance.isInteracting = true;
-        miniGameOverlay.style.display = DisplayStyle.Flex;
+        
+        var actualOverlay = miniGameOverlay.Q("MiniGameOverlay");
+        if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.Flex;
+
         miniTimer = 10f;
         currentAttempt = new List<string>();
         currentSentenceLabel.text = "";
         
-        if (hintLabel != null)
-        {
-            hintLabel.text = "Hint: " + data.fullSentence;
-        }
+        if (hintLabel != null) hintLabel.text = "Hint: " + data.fullSentence;
 
         targetWords = data.fullSentence.Split(' ', System.StringSplitOptions.RemoveEmptyEntries).ToList();
         List<string> scrambled = targetWords.OrderBy(x => Random.value).ToList();
@@ -154,8 +239,7 @@ public class UIManager : MonoBehaviour
         wordContainer.Clear();
         foreach (var word in scrambled)
         {
-            Button btn = new Button();
-            btn.text = word;
+            Button btn = new Button { text = word };
             btn.style.marginRight = 5;
             btn.style.marginBottom = 5;
             btn.clicked += () => OnWordClicked(btn);
@@ -177,24 +261,14 @@ public class UIManager : MonoBehaviour
 
     private void EndMiniGame(bool success)
     {
-        if (success)
-        {
-            Debug.Log("Mini Game Success!");
-            GameManager.Instance.ModifyEmpathy(2);
-        }
-        else
-        {
-            Debug.Log("Mini Game Fail!");
-            GameManager.Instance.ModifyEmpathy(-10);
-        }
+        if (success) GameManager.Instance.ModifyEmpathy(2);
+        else GameManager.Instance.ModifyEmpathy(-10);
         
-        // Ensure the NPC is notified and removed
-        if (currentNPC != null)
-        {
-            currentNPC.OnInteractionEnd(success);
-        }
+        if (currentNPC != null) currentNPC.OnInteractionEnd(success);
 
-        miniGameOverlay.style.display = DisplayStyle.None;
+        var actualOverlay = miniGameOverlay.Q("MiniGameOverlay");
+        if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.None;
+
         GameManager.Instance.isInteracting = false;
         currentNPC = null;
     }
