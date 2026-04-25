@@ -82,11 +82,9 @@ public class UIManager : MonoBehaviour
             miniGameOverlay.style.position = Position.Absolute;
             miniGameOverlay.style.width = Length.Percent(100);
             miniGameOverlay.style.height = Length.Percent(100);
+            miniGameOverlay.style.display = DisplayStyle.None;
             root.Add(miniGameOverlay);
             
-            var actualOverlay = miniGameOverlay.Q("MiniGameOverlay");
-            if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.None;
-
             wordContainer = miniGameOverlay.Q<VisualElement>("WordContainer");
             miniTimerLabel = miniGameOverlay.Q<Label>("MiniTimer");
             currentSentenceLabel = miniGameOverlay.Q<Label>("CurrentSentence");
@@ -100,10 +98,8 @@ public class UIManager : MonoBehaviour
             evaluationOverlay.style.position = Position.Absolute;
             evaluationOverlay.style.width = Length.Percent(100);
             evaluationOverlay.style.height = Length.Percent(100);
+            evaluationOverlay.style.display = DisplayStyle.None;
             root.Add(evaluationOverlay);
-
-            var actualOverlay = evaluationOverlay.Q("EvaluationOverlay");
-            if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.None;
 
             resultTitle = evaluationOverlay.Q<Label>("ResultTitle");
             resultMessage = evaluationOverlay.Q<Label>("ResultMessage");
@@ -143,15 +139,11 @@ public class UIManager : MonoBehaviour
 
         UpdateMinimap();
 
-        if (miniGameOverlay != null)
+        if (miniGameOverlay != null && miniGameOverlay.style.display == DisplayStyle.Flex)
         {
-            var actualOverlay = miniGameOverlay.Q("MiniGameOverlay");
-            if (actualOverlay != null && actualOverlay.style.display == DisplayStyle.Flex)
-            {
-                miniTimer -= Time.deltaTime;
-                if (miniTimerLabel != null) miniTimerLabel.text = Mathf.CeilToInt(miniTimer).ToString();
-                if (miniTimer <= 0) EndMiniGame(false);
-            }
+            miniTimer -= Time.deltaTime;
+            if (miniTimerLabel != null) miniTimerLabel.text = Mathf.CeilToInt(miniTimer).ToString();
+            if (miniTimer <= 0) EndMiniGame(false);
         }
     }
 
@@ -207,8 +199,7 @@ public class UIManager : MonoBehaviour
         if (finalCleanliness != null) finalCleanliness.text = "Kebersihan Akhir: " + Mathf.FloorToInt(cleanliness) + "%";
         if (finalEmpathy != null) finalEmpathy.text = "Empati Akhir: " + Mathf.FloorToInt(empathy);
 
-        var actualOverlay = evaluationOverlay.Q("EvaluationOverlay");
-        if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.Flex;
+        evaluationOverlay.style.display = DisplayStyle.Flex;
     }
 
     private void RestartGame()
@@ -223,9 +214,7 @@ public class UIManager : MonoBehaviour
 
         currentNPC = npc;
         GameManager.Instance.isInteracting = true;
-        
-        var actualOverlay = miniGameOverlay.Q("MiniGameOverlay");
-        if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.Flex;
+        miniGameOverlay.style.display = DisplayStyle.Flex;
 
         miniTimer = 10f;
         currentAttempt = new List<string>();
@@ -266,9 +255,7 @@ public class UIManager : MonoBehaviour
         
         if (currentNPC != null) currentNPC.OnInteractionEnd(success);
 
-        var actualOverlay = miniGameOverlay.Q("MiniGameOverlay");
-        if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.None;
-
+        miniGameOverlay.style.display = DisplayStyle.None;
         GameManager.Instance.isInteracting = false;
         currentNPC = null;
     }
