@@ -186,13 +186,14 @@ public class UIManager : MonoBehaviour
         {
             Debug.Log("Mini Game Fail!");
             GameManager.Instance.ModifyEmpathy(-10);
-            if (currentNPC != null)
-            {
-                var player = GameObject.Find("Player").GetComponent<SapuJagad.PlayerController>();
-                currentNPC.ApplyPenalty(player);
-            }
         }
         
+        // Ensure the NPC is notified and removed
+        if (currentNPC != null)
+        {
+            currentNPC.OnInteractionEnd(success);
+        }
+
         miniGameOverlay.style.display = DisplayStyle.None;
         GameManager.Instance.isInteracting = false;
         currentNPC = null;

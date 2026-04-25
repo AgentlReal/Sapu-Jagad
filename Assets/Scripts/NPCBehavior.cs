@@ -9,6 +9,7 @@ public class NPCBehavior : MonoBehaviour
 
     private static GameObject _trashPrefab;
     private SpriteRenderer sr;
+    private Spawner _spawner;
 
     private void Awake()
     {
@@ -17,16 +18,19 @@ public class NPCBehavior : MonoBehaviour
 
     private void Start()
     {
+        // Cache spawner reference
+        var spawners = GameObject.FindObjectsByType<Spawner>(FindObjectsSortMode.None);
+        if (spawners.Length > 0) _spawner = spawners[0];
+
         if (data != null)
         {
             ApplyNPCData();
             trashTimer = data.trashDropRate;
         }
 
-        if (_trashPrefab == null)
+        if (_trashPrefab == null && _spawner != null)
         {
-            var spawner = GameObject.FindObjectsByType<Spawner>(FindObjectsSortMode.None)[0];
-            _trashPrefab = spawner.trashPrefab;
+            _trashPrefab = _spawner.trashPrefab;
         }
     }
 
@@ -70,7 +74,23 @@ public class NPCBehavior : MonoBehaviour
         interacted = true; 
     }
 
-    public void ApplyPenalty(SapuJagad.PlayerController player)
+    public void OnInteractionEnd(bool success)
+    {
+        if (!success)
+        {
+            // Failure: Apply penalty
+            var player = GameObject.Find("Player")?.GetComponent<SapuJagad.PlayerController>();
+            if (player != null) ApplyPenalty(player);
+        }
+
+        // Notify spawner to free up the slot
+        if (_spawner != null) _spawner.OnNPCRemoved(gameObject);
+        
+        // Remove the NPC from the scene
+        Destroy(gameObject);
+    }
+
+    private void ApplyPenalty(SapuJagad.PlayerController player)
     {
         if (player == null) return;
         
