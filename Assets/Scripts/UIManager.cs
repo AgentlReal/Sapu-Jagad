@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,6 +27,7 @@ public class UIManager : MonoBehaviour
     private Label miniTimerLabel;
     private Label currentSentenceLabel;
     private Label hintLabel;
+    private Image npcPortrait;
 
     // Evaluation Elements
     private VisualElement evaluationOverlay;
@@ -39,6 +41,7 @@ public class UIManager : MonoBehaviour
     private List<string> currentAttempt;
     private float miniTimer = 10f;
     private NPCBehavior currentNPC;
+    private bool isMiniGameActive = false;
 
     private Dictionary<GameObject, VisualElement> minimapIcons = new Dictionary<GameObject, VisualElement>();
     private float mapScale = 5f;
@@ -73,33 +76,56 @@ public class UIManager : MonoBehaviour
 
     private void InitializeOverlays()
     {
+        if (root == null) root = uiDocument.rootVisualElement;
         if (root == null) return;
+
+        // Clean existing clones if any
+        var oldMini = root.Q("MiniGameOverlay");
+        if (oldMini != null && miniGameOverlay == null) miniGameOverlay = oldMini.parent; 
 
         // Mini-game Overlay
         if (miniGameAsset != null && miniGameOverlay == null)
         {
-            miniGameOverlay = miniGameAsset.Instantiate();
-            miniGameOverlay.style.position = Position.Absolute;
-            miniGameOverlay.style.width = Length.Percent(100);
-            miniGameOverlay.style.height = Length.Percent(100);
-            miniGameOverlay.style.display = DisplayStyle.None;
-            root.Add(miniGameOverlay);
-            
+            var container = miniGameAsset.Instantiate();
+            container.style.position = Position.Absolute;
+            container.style.width = Length.Percent(100);
+            container.style.height = Length.Percent(100);
+            container.pickingMode = PickingMode.Ignore; // Allow clicks to reach children
+            root.Add(container);
+            miniGameOverlay = container;
+        }
+
+        if (miniGameOverlay != null)
+        {
+            var actualOverlay = miniGameOverlay.Q("MiniGameOverlay");
+            if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.None;
+
             wordContainer = miniGameOverlay.Q<VisualElement>("WordContainer");
             miniTimerLabel = miniGameOverlay.Q<Label>("MiniTimer");
             currentSentenceLabel = miniGameOverlay.Q<Label>("CurrentSentence");
             hintLabel = miniGameOverlay.Q<Label>("Hint");
+            npcPortrait = miniGameOverlay.Q<Image>("NPCPortrait");
         }
 
         // Evaluation Overlay
+        var oldEval = root.Q("EvaluationOverlay");
+        if (oldEval != null && evaluationOverlay == null) evaluationOverlay = oldEval.parent;
+
         if (evaluationAsset != null && evaluationOverlay == null)
         {
-            evaluationOverlay = evaluationAsset.Instantiate();
-            evaluationOverlay.style.position = Position.Absolute;
-            evaluationOverlay.style.width = Length.Percent(100);
-            evaluationOverlay.style.height = Length.Percent(100);
-            evaluationOverlay.style.display = DisplayStyle.None;
-            root.Add(evaluationOverlay);
+            var container = evaluationAsset.Instantiate();
+            container.style.position = Position.Absolute;
+            container.style.width = Length.Percent(100);
+            container.style.height = Length.Percent(100);
+            container.pickingMode = PickingMode.Ignore;
+            root.Add(container);
+            evaluationOverlay = container;
+        }
+
+        if (evaluationOverlay != null)
+        {
+            var actualOverlay = evaluationOverlay.Q("EvaluationOverlay");
+            if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.None;
 
             resultTitle = evaluationOverlay.Q<Label>("ResultTitle");
             resultMessage = evaluationOverlay.Q<Label>("ResultMessage");
@@ -108,7 +134,10 @@ public class UIManager : MonoBehaviour
             restartButton = evaluationOverlay.Q<Button>("RestartButton");
             
             if (restartButton != null)
+            {
+                restartButton.clicked -= RestartGame;
                 restartButton.clicked += RestartGame;
+            }
         }
     }
 
@@ -139,7 +168,7 @@ public class UIManager : MonoBehaviour
 
         UpdateMinimap();
 
-        if (miniGameOverlay != null && miniGameOverlay.style.display == DisplayStyle.Flex)
+        if (isMiniGameActive)
         {
             miniTimer -= Time.deltaTime;
             if (miniTimerLabel != null) miniTimerLabel.text = Mathf.CeilToInt(miniTimer).ToString();
@@ -199,7 +228,8 @@ public class UIManager : MonoBehaviour
         if (finalCleanliness != null) finalCleanliness.text = "Kebersihan Akhir: " + Mathf.FloorToInt(cleanliness) + "%";
         if (finalEmpathy != null) finalEmpathy.text = "Empati Akhir: " + Mathf.FloorToInt(empathy);
 
-        evaluationOverlay.style.display = DisplayStyle.Flex;
+        var actualOverlay = evaluationOverlay.Q("EvaluationOverlay");
+        if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.Flex;
     }
 
     private void RestartGame()
@@ -214,7 +244,14 @@ public class UIManager : MonoBehaviour
 
         currentNPC = npc;
         GameManager.Instance.isInteracting = true;
-        miniGameOverlay.style.display = DisplayStyle.Flex;
+        isMiniGameActive = true;
+        
+        var actualOverlay = miniGameOverlay.Q("MiniGameOverlay");
+        if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.Flex;
+
+        // Set Initial Portrait
+        if (npcPortrait != null && currentNPC.data != null)
+            npcPortrait.sprite = currentNPC.data.faceNeutral;
 
         miniTimer = 10f;
         currentAttempt = new List<string>();
@@ -238,6 +275,7 @@ public class UIManager : MonoBehaviour
 
     private void OnWordClicked(Button btn)
     {
+        Debug.Log("Word Clicked: " + btn.text); // Added Debug
         currentAttempt.Add(btn.text);
         currentSentenceLabel.text = string.Join(" ", currentAttempt);
         btn.SetEnabled(false);
@@ -250,12 +288,33 @@ public class UIManager : MonoBehaviour
 
     private void EndMiniGame(bool success)
     {
-        if (success) GameManager.Instance.ModifyEmpathy(2);
-        else GameManager.Instance.ModifyEmpathy(-10);
-        
-        if (currentNPC != null) currentNPC.OnInteractionEnd(success);
+        if (!isMiniGameActive) return;
+        isMiniGameActive = false;
 
-        miniGameOverlay.style.display = DisplayStyle.None;
+        if (success)
+        {
+            GameManager.Instance.ModifyEmpathy(2);
+            if (npcPortrait != null && currentNPC != null) npcPortrait.sprite = currentNPC.data.faceHappy;
+        }
+        else
+        {
+            GameManager.Instance.ModifyEmpathy(-10);
+            if (npcPortrait != null && currentNPC != null) npcPortrait.sprite = currentNPC.data.faceAngry;
+        }
+        
+        StartCoroutine(CloseMiniGameRoutine(success));
+    }
+
+    private IEnumerator CloseMiniGameRoutine(bool success)
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        if (currentNPC != null)
+            currentNPC.OnInteractionEnd(success);
+
+        var actualOverlay = miniGameOverlay.Q("MiniGameOverlay");
+        if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.None;
+
         GameManager.Instance.isInteracting = false;
         currentNPC = null;
     }

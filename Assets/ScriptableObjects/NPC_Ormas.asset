@@ -20,3 +20,6 @@ MonoBehaviour:
   penaltyDuration: 10
   dialogueOptions:
   - {fileID: 11400000, guid: 589ea428009ac824a9b04e510d39c4ab, type: 2}
+  faceNeutral: {fileID: 7075761797296788970, guid: 2422e339adaed6b4cafc7a4d0e691627, type: 3}
+  faceHappy: {fileID: 1175008660453029878, guid: 151565544728c6b4db6a2ff566aa3ac2, type: 3}
+  faceAngry: {fileID: 6492483580438882514, guid: 361b48bd2638cc04bb109e2dcab0831c, type: 3}

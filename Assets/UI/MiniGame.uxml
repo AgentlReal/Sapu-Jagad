@@ -1,11 +1,19 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
-    <ui:VisualElement name="MiniGameOverlay" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center;">
-        <ui:VisualElement name="Panel" style="width: 600px; padding: 30px; background-color: white; border-radius: 10px;">
-            <ui:Label name="Instruction" text="Susun kata-kata berikut!" style="font-size: 20px; color: black; -unity-text-align: middle-center; margin-bottom: 5px;" />
-            <ui:Label name="Hint" text="Hint: ..." style="font-size: 16px; color: gray; -unity-text-align: middle-center; margin-bottom: 20px; -unity-font-style: italic; white-space: normal;" />
-            <ui:Label name="CurrentSentence" text="..." style="font-size: 24px; color: green; -unity-text-align: middle-center; margin-bottom: 20px; white-space: normal;" />
-            <ui:VisualElement name="WordContainer" style="flex-direction: row; flex-wrap: wrap; justify-content: center;" />
-            <ui:Label name="MiniTimer" text="10" style="font-size: 30px; color: red; -unity-text-align: middle-center; margin-top: 20px;" />
+    <ui:VisualElement name="MiniGameOverlay" picking-mode="Position" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center;">
+        <ui:VisualElement name="Panel" picking-mode="Position" style="width: 800px; padding: 30px; background-color: white; border-radius: 10px; flex-direction: row;">
+            <!-- Left Side: NPC Portrait -->
+            <ui:VisualElement name="PortraitContainer" picking-mode="Position" style="width: 200px; height: 200px; margin-right: 20px; justify-content: center; align-items: center; border-width: 2px; border-color: #ddd;">
+                <ui:Image name="NPCPortrait" picking-mode="Position" style="width: 180px; height: 180px;" />
+            </ui:VisualElement>
+
+            <!-- Right Side: Content -->
+            <ui:VisualElement name="MainContent" picking-mode="Position" style="flex-grow: 1;">
+                <ui:Label name="Instruction" picking-mode="Position" text="Susun kata-kata berikut!" style="font-size: 20px; color: black; -unity-text-align: middle-center; margin-bottom: 5px;" />
+                <ui:Label name="Hint" picking-mode="Position" text="Hint: ..." style="font-size: 16px; color: gray; -unity-text-align: middle-center; margin-bottom: 20px; -unity-font-style: italic; white-space: normal;" />
+                <ui:Label name="CurrentSentence" picking-mode="Position" text="..." style="font-size: 24px; color: green; -unity-text-align: middle-center; margin-bottom: 20px; white-space: normal;" />
+                <ui:VisualElement name="WordContainer" picking-mode="Position" style="flex-direction: row; flex-wrap: wrap; justify-content: center;" />
+                <ui:Label name="MiniTimer" picking-mode="Position" text="10" style="font-size: 30px; color: red; -unity-text-align: middle-center; margin-top: 20px;" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

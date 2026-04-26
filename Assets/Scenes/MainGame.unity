@@ -336,8 +336,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5906ecd703ae9c74db5382a90e8528f1, type: 2}
   npcPrefab: {fileID: 2883498061809391342, guid: af053517e92922649ba59ea4b0a0b9cc, type: 3}
   initialTrashCount: 20
-  npcSpawnIntervalMin: 30
-  npcSpawnIntervalMax: 60
+  npcSpawnIntervalMin: 10
+  npcSpawnIntervalMax: 12
   spawnArea:
     serializedVersion: 2
     x: -10
