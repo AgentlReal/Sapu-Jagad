@@ -8,6 +8,7 @@ namespace SapuJagad
         public float moveSpeed = 5f;
         private Vector2 moveInput;
         private Rigidbody2D rb;
+        private Animator anim;
 
         public float interactRadius = 2.0f;
         public LayerMask interactLayer;
@@ -19,6 +20,7 @@ namespace SapuJagad
         {
             rb = GetComponent<Rigidbody2D>();
             rb.gravityScale = 0;
+            anim = GetComponent<Animator>();
         }
 
         // Using SendMessages behavior (OnMove, OnInteract)
@@ -51,6 +53,7 @@ namespace SapuJagad
             if (GameManager.Instance != null && (GameManager.Instance.isInteracting || GameManager.Instance.isGameOver))
             {
                 rb.linearVelocity = Vector2.zero;
+                UpdateAnimations(Vector2.zero);
                 return;
             }
 
@@ -65,6 +68,20 @@ namespace SapuJagad
             }
 
             rb.linearVelocity = moveInput * currentSpeed;
+            UpdateAnimations(moveInput);
+        }
+
+        private void UpdateAnimations(Vector2 move)
+        {
+            if (anim == null) return;
+            
+            float speed = move.magnitude;
+            anim.SetFloat("Speed", speed);
+            
+            if (speed > 0.01f)
+            {
+                anim.SetFloat("Horizontal", move.x);
+            }
         }
 
         private void HandleInteraction()

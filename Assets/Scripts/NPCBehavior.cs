@@ -10,10 +10,12 @@ public class NPCBehavior : MonoBehaviour
     private static GameObject _trashPrefab;
     private SpriteRenderer sr;
     private Spawner _spawner;
+    private Animator anim;
 
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     private void Start()
@@ -42,10 +44,20 @@ public class NPCBehavior : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance == null || GameManager.Instance.isInteracting || GameManager.Instance.isGameOver || interacted) return;
+        if (GameManager.Instance == null || GameManager.Instance.isInteracting || GameManager.Instance.isGameOver || interacted) 
+        {
+            if (anim != null) anim.SetFloat("Horizontal", 0);
+            return;
+        }
 
         // Simple random movement
-        transform.Translate(Vector2.right * data.moveSpeed * Time.deltaTime * Mathf.Sin(Time.time * 0.5f));
+        float moveStep = Mathf.Sin(Time.time * 0.5f);
+        transform.Translate(Vector2.right * data.moveSpeed * Time.deltaTime * moveStep);
+
+        if (anim != null)
+        {
+            anim.SetFloat("Horizontal", moveStep);
+        }
 
         trashTimer -= Time.deltaTime;
         if (trashTimer <= 0)
