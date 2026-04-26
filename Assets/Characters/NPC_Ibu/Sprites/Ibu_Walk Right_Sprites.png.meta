@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bd3b36eb6e0d286439e8acb97a257513
+guid: 5c3addf757e973f42945a992b376c24e
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -66,7 +66,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 400
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -118,10 +118,10 @@ TextureImporter:
       name: Player_Walk Right_Sprites_0
       rect:
         serializedVersion: 2
-        x: 204
-        y: 23
-        width: 204
-        height: 777
+        x: 32
+        y: 3
+        width: 34
+        height: 125
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,10 +140,10 @@ TextureImporter:
       name: Player_Walk Right_Sprites_1
       rect:
         serializedVersion: 2
-        x: 872
+        x: 138
         y: 0
-        width: 268
-        height: 777
+        width: 46
+        height: 125
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,10 +162,10 @@ TextureImporter:
       name: Player_Walk Right_Sprites_2
       rect:
         serializedVersion: 2
-        x: 1500
-        y: 28
-        width: 424
-        height: 755
+        x: 239
+        y: 3
+        width: 70
+        height: 123
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,10 +184,10 @@ TextureImporter:
       name: Player_Walk Right_Sprites_3
       rect:
         serializedVersion: 2
-        x: 2289
-        y: 21
-        width: 212
-        height: 778
+        x: 365
+        y: 2
+        width: 37
+        height: 126
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,10 +206,10 @@ TextureImporter:
       name: Player_Walk Right_Sprites_4
       rect:
         serializedVersion: 2
-        x: 2914
-        y: 8
-        width: 371
-        height: 762
+        x: 465
+        y: 0
+        width: 62
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -228,10 +228,10 @@ TextureImporter:
       name: Player_Walk Right_Sprites_5
       rect:
         serializedVersion: 2
-        x: 3556
-        y: 17
-        width: 455
-        height: 755
+        x: 568
+        y: 2
+        width: 75
+        height: 123
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
