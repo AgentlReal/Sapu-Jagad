@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: bd3b36eb6e0d286439e8acb97a257513
+guid: 5927a5f5aa84e834d881dd4df4efb33b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3396312646302359324
-    second: Player_Walk Right_Sprites_0
+      213: 6418220362362615350
+    second: Ibu_Move Left_0
   - first:
-      213: 4021997660385498741
-    second: Player_Walk Right_Sprites_1
+      213: -5255291348356163409
+    second: Ibu_Move Left_1
   - first:
-      213: -1150150331666375126
-    second: Player_Walk Right_Sprites_2
+      213: -2523917145823009024
+    second: Ibu_Move Left_2
   - first:
-      213: 7687699287828526556
-    second: Player_Walk Right_Sprites_3
+      213: 2694295044562397361
+    second: Ibu_Move Left_3
   - first:
-      213: 5298968729760818111
-    second: Player_Walk Right_Sprites_4
+      213: -319624334364097801
+    second: Ibu_Move Left_4
   - first:
-      213: 4493311979739511491
-    second: Player_Walk Right_Sprites_5
+      213: -6426092178206580811
+    second: Ibu_Move Left_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Walk Right_Sprites_0
+      name: Ibu_Move Left_0
       rect:
         serializedVersion: 2
-        x: 204
-        y: 23
-        width: 204
-        height: 777
+        x: 299
+        y: 16
+        width: 203
+        height: 784
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,63 +130,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4e02bf284afddd0d0800000000000000
-      internalID: -3396312646302359324
+      spriteID: 6367dc41a69121950800000000000000
+      internalID: 6418220362362615350
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Walk Right_Sprites_1
+      name: Ibu_Move Left_1
       rect:
         serializedVersion: 2
-        x: 872
+        x: 956
         y: 0
-        width: 268
-        height: 777
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 576daba009101d730800000000000000
-      internalID: 4021997660385498741
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Walk Right_Sprites_2
-      rect:
-        serializedVersion: 2
-        x: 1500
-        y: 28
-        width: 424
-        height: 755
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a2e5abafd58d900f0800000000000000
-      internalID: -1150150331666375126
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Walk Right_Sprites_3
-      rect:
-        serializedVersion: 2
-        x: 2289
-        y: 21
-        width: 212
+        width: 333
         height: 778
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -196,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cd5fa0765c130ba60800000000000000
-      internalID: 7687699287828526556
+      spriteID: fa81c06cc547117b0800000000000000
+      internalID: -5255291348356163409
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Walk Right_Sprites_4
+      name: Ibu_Move Left_2
       rect:
         serializedVersion: 2
-        x: 2914
-        y: 8
-        width: 371
-        height: 762
+        x: 1617
+        y: 30
+        width: 424
+        height: 759
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fb3eb4d0cf7b98940800000000000000
-      internalID: 5298968729760818111
+      spriteID: 007a3b86abe39fcd0800000000000000
+      internalID: -2523917145823009024
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Walk Right_Sprites_5
+      name: Ibu_Move Left_3
       rect:
         serializedVersion: 2
-        x: 3556
-        y: 17
-        width: 455
-        height: 755
+        x: 2424
+        y: 35
+        width: 267
+        height: 765
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -240,8 +196,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3ca716160737b5e30800000000000000
-      internalID: 4493311979739511491
+      spriteID: 1b8ac3b611f046520800000000000000
+      internalID: 2694295044562397361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ibu_Move Left_4
+      rect:
+        serializedVersion: 2
+        x: 3081
+        y: 6
+        width: 374
+        height: 767
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f248a08c57709bf0800000000000000
+      internalID: -319624334364097801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ibu_Move Left_5
+      rect:
+        serializedVersion: 2
+        x: 3766
+        y: 13
+        width: 466
+        height: 756
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bf9418f53fe1d6a0800000000000000
+      internalID: -6426092178206580811
       vertices: []
       indices: 
       edges: []
@@ -260,12 +260,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Player_Walk Right_Sprites_0: -3396312646302359324
-      Player_Walk Right_Sprites_1: 4021997660385498741
-      Player_Walk Right_Sprites_2: -1150150331666375126
-      Player_Walk Right_Sprites_3: 7687699287828526556
-      Player_Walk Right_Sprites_4: 5298968729760818111
-      Player_Walk Right_Sprites_5: 4493311979739511491
+      Ibu_Move Left_0: 6418220362362615350
+      Ibu_Move Left_1: -5255291348356163409
+      Ibu_Move Left_2: -2523917145823009024
+      Ibu_Move Left_3: 2694295044562397361
+      Ibu_Move Left_4: -319624334364097801
+      Ibu_Move Left_5: -6426092178206580811
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

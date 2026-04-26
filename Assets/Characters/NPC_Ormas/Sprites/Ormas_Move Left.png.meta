@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: bd513a35b89d81f4687f0b90a1c3f6bc
+guid: 85674446265f92d4c9bff4f9815fb016
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1324687752268409824
-    second: Player_Walk Left_Sprites_0
+      213: -7587274855185854624
+    second: Ormas_Move Left_0
   - first:
-      213: -5983839791418978409
-    second: Player_Walk Left_Sprites_1
+      213: 5969143890477041189
+    second: Ormas_Move Left_1
   - first:
-      213: -8895432523548858706
-    second: Player_Walk Left_Sprites_2
+      213: 8504404816068440954
+    second: Ormas_Move Left_2
   - first:
-      213: 3305879485161610951
-    second: Player_Walk Left_Sprites_3
+      213: 4412462486365041159
+    second: Ormas_Move Left_3
   - first:
-      213: -1591384452985826092
-    second: Player_Walk Left_Sprites_4
+      213: -8289573873946184558
+    second: Ormas_Move Left_4
   - first:
-      213: -6993664512467479801
-    second: Player_Walk Left_Sprites_5
+      213: 5057246211171502260
+    second: Ormas_Move Left_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -115,7 +115,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Walk Left_Sprites_0
+      name: Ormas_Move Left_0
       rect:
         serializedVersion: 2
         x: 287
@@ -130,14 +130,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0ebe4400e7c326210800000000000000
-      internalID: 1324687752268409824
+      spriteID: 06fc463e7b594b690800000000000000
+      internalID: -7587274855185854624
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Walk Left_Sprites_1
+      name: Ormas_Move Left_1
       rect:
         serializedVersion: 2
         x: 946
@@ -152,14 +152,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 79fcf97d96125fca0800000000000000
-      internalID: -5983839791418978409
+      spriteID: 526c3151eb8a6d250800000000000000
+      internalID: 5969143890477041189
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Walk Left_Sprites_2
+      name: Ormas_Move Left_2
       rect:
         serializedVersion: 2
         x: 1552
@@ -174,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ea6e966ff331d8480800000000000000
-      internalID: -8895432523548858706
+      spriteID: a7371e73f17b50670800000000000000
+      internalID: 8504404816068440954
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Walk Left_Sprites_3
+      name: Ormas_Move Left_3
       rect:
         serializedVersion: 2
         x: 2366
@@ -196,14 +196,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7ce1f4f50e7d0ed20800000000000000
-      internalID: 3305879485161610951
+      spriteID: 702768cc0473c3d30800000000000000
+      internalID: 4412462486365041159
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Walk Left_Sprites_4
+      name: Ormas_Move Left_4
       rect:
         serializedVersion: 2
         x: 2973
@@ -218,14 +218,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4d453b285444ae9e0800000000000000
-      internalID: -1591384452985826092
+      spriteID: 29434105b7485fc80800000000000000
+      internalID: -8289573873946184558
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Walk Left_Sprites_5
+      name: Ormas_Move Left_5
       rect:
         serializedVersion: 2
         x: 3638
@@ -240,8 +240,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 703de101e2381fe90800000000000000
-      internalID: -6993664512467479801
+      spriteID: 4b8419672a2fe2640800000000000000
+      internalID: 5057246211171502260
       vertices: []
       indices: 
       edges: []
@@ -260,12 +260,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Player_Walk Left_Sprites_0: 1324687752268409824
-      Player_Walk Left_Sprites_1: -5983839791418978409
-      Player_Walk Left_Sprites_2: -8895432523548858706
-      Player_Walk Left_Sprites_3: 3305879485161610951
-      Player_Walk Left_Sprites_4: -1591384452985826092
-      Player_Walk Left_Sprites_5: -6993664512467479801
+      Ormas_Move Left_0: -7587274855185854624
+      Ormas_Move Left_1: 5969143890477041189
+      Ormas_Move Left_2: 8504404816068440954
+      Ormas_Move Left_3: 4412462486365041159
+      Ormas_Move Left_4: -8289573873946184558
+      Ormas_Move Left_5: 5057246211171502260
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

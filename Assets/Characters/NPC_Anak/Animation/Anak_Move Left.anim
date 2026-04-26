@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Idle
+  m_Name: Anak_Move Left
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,7 +21,7 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -467307283419413426, guid: 68225b6fa89f2cc438b88be04ea15837, type: 3}
+      value: {fileID: 298295021182768300, guid: 132d093ff1ec7b445b2e340dc2becc17, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,7 +44,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -467307283419413426, guid: 68225b6fa89f2cc438b88be04ea15837, type: 3}
+    - {fileID: 298295021182768300, guid: 132d093ff1ec7b445b2e340dc2becc17, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

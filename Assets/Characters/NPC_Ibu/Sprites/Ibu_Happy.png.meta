@@ -3,8 +3,8 @@ guid: 52c14cc4e0d8dab4cbe3e7285ba6ea73
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1175008660453029878
-    second: Ormas_Happy_0
+      213: -2597009172750965734
+    second: Ibu_Happy_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ormas_Happy_0
+      name: Ibu_Happy_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6f77f46b6287e4010800000000000000
-      internalID: 1175008660453029878
+      spriteID: a146fbbbae195fbd0800000000000000
+      internalID: -2597009172750965734
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Ormas_Happy_0: 1175008660453029878
+      Ibu_Happy_0: -2597009172750965734
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

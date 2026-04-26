@@ -3,8 +3,8 @@ guid: 24920dc303ab46d4c996ce411bd54671
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6492483580438882514
-    second: Ormas_Angry_0
+      213: 1560569401422618266
+    second: Anak_Angry_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ormas_Angry_0
+      name: Anak_Angry_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2d8ad12fa6fe91a50800000000000000
-      internalID: 6492483580438882514
+      spriteID: a9e93233a9148a510800000000000000
+      internalID: 1560569401422618266
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Ormas_Angry_0: 6492483580438882514
+      Anak_Angry_0: 1560569401422618266
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

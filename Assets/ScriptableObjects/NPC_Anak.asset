@@ -20,6 +20,7 @@ MonoBehaviour:
   penaltyDuration: 5
   dialogueOptions:
   - {fileID: 11400000, guid: aefb3b62be8b174479334b2b6a14f79a, type: 2}
-  faceNeutral: {fileID: 7075761797296788970, guid: aa0e9b48b6fbc624ca50ca71123b63fd, type: 3}
-  faceHappy: {fileID: 1175008660453029878, guid: 9d5da18bb4fd7324aa25da3fc781368f, type: 3}
-  faceAngry: {fileID: 6492483580438882514, guid: 24920dc303ab46d4c996ce411bd54671, type: 3}
+  faceNeutral: {fileID: 4084995714042413245, guid: aa0e9b48b6fbc624ca50ca71123b63fd, type: 3}
+  faceHappy: {fileID: 6201972358288404113, guid: 9d5da18bb4fd7324aa25da3fc781368f, type: 3}
+  faceAngry: {fileID: 1560569401422618266, guid: 24920dc303ab46d4c996ce411bd54671, type: 3}
+  animatorController: {fileID: 9100000, guid: d6adfab344839f34a8a642e9880e5b44, type: 2}

@@ -16,4 +16,7 @@ public class NPCData : ScriptableObject
     public Sprite faceNeutral;
     public Sprite faceHappy;
     public Sprite faceAngry;
+
+    [Header("Animation")]
+    public RuntimeAnimatorController animatorController;
 }

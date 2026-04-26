@@ -9,8 +9,8 @@ public class NPCBehavior : MonoBehaviour
 
     private static GameObject _trashPrefab;
     private SpriteRenderer sr;
-    private Spawner _spawner;
     private Animator anim;
+    private Spawner _spawner;
 
     private void Awake()
     {
@@ -20,7 +20,6 @@ public class NPCBehavior : MonoBehaviour
 
     private void Start()
     {
-        // Cache spawner reference
         var spawners = GameObject.FindObjectsByType<Spawner>(FindObjectsSortMode.None);
         if (spawners.Length > 0) _spawner = spawners[0];
 
@@ -38,26 +37,21 @@ public class NPCBehavior : MonoBehaviour
 
     public void ApplyNPCData()
     {
-        if (data == null || sr == null) return;
-        sr.sprite = data.sprite;
+        if (data == null) return;
+        
+        if (sr != null) sr.sprite = data.sprite;
+        
+        if (anim != null && data.animatorController != null)
+        {
+            anim.runtimeAnimatorController = data.animatorController;
+        }
     }
 
     private void Update()
     {
-        if (GameManager.Instance == null || GameManager.Instance.isInteracting || GameManager.Instance.isGameOver || interacted) 
-        {
-            if (anim != null) anim.SetFloat("Horizontal", 0);
-            return;
-        }
+        if (GameManager.Instance == null || GameManager.Instance.isInteracting || GameManager.Instance.isGameOver || interacted) return;
 
-        // Simple random movement
-        float moveStep = Mathf.Sin(Time.time * 0.5f);
-        transform.Translate(Vector2.right * data.moveSpeed * Time.deltaTime * moveStep);
-
-        if (anim != null)
-        {
-            anim.SetFloat("Horizontal", moveStep);
-        }
+        transform.Translate(Vector2.right * data.moveSpeed * Time.deltaTime * Mathf.Sin(Time.time * 0.5f));
 
         trashTimer -= Time.deltaTime;
         if (trashTimer <= 0)
@@ -90,15 +84,11 @@ public class NPCBehavior : MonoBehaviour
     {
         if (!success)
         {
-            // Failure: Apply penalty
             var player = GameObject.Find("Player")?.GetComponent<SapuJagad.PlayerController>();
             if (player != null) ApplyPenalty(player);
         }
 
-        // Notify spawner to free up the slot
         if (_spawner != null) _spawner.OnNPCRemoved(gameObject);
-        
-        // Remove the NPC from the scene
         Destroy(gameObject);
     }
 

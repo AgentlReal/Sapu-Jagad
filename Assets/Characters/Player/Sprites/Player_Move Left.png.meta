@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: 6b9f68078038c34408e37b818987ed78
+guid: 68e09095bd366ff49852cfef7f5467de
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3396312646302359324
-    second: Player_Walk Right_Sprites_0
+      213: 1403701886929245076
+    second: Player_Move Left_0
   - first:
-      213: 4021997660385498741
-    second: Player_Walk Right_Sprites_1
+      213: 41584726874090918
+    second: Player_Move Left_1
   - first:
-      213: -1150150331666375126
-    second: Player_Walk Right_Sprites_2
+      213: 6468168849999639059
+    second: Player_Move Left_2
   - first:
-      213: 7687699287828526556
-    second: Player_Walk Right_Sprites_3
+      213: 1930731115528494134
+    second: Player_Move Left_3
   - first:
-      213: 5298968729760818111
-    second: Player_Walk Right_Sprites_4
+      213: 4617263474330491192
+    second: Player_Move Left_4
   - first:
-      213: 4493311979739511491
-    second: Player_Walk Right_Sprites_5
+      213: -1877166009011699982
+    second: Player_Move Left_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -66,7 +66,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 400
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Walk Right_Sprites_0
+      name: Player_Move Left_0
       rect:
         serializedVersion: 2
-        x: 32
-        y: 3
-        width: 34
-        height: 125
+        x: 294
+        y: 16
+        width: 178
+        height: 780
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,20 +130,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4e02bf284afddd0d0800000000000000
-      internalID: -3396312646302359324
+      spriteID: 49396f4dd63fa7310800000000000000
+      internalID: 1403701886929245076
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Walk Right_Sprites_1
+      name: Player_Move Left_1
       rect:
         serializedVersion: 2
-        x: 138
+        x: 939
         y: 0
-        width: 46
-        height: 125
+        width: 338
+        height: 774
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 576daba009101d730800000000000000
-      internalID: 4021997660385498741
+      spriteID: 6ad6969b61db39000800000000000000
+      internalID: 41584726874090918
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Walk Right_Sprites_2
+      name: Player_Move Left_2
       rect:
         serializedVersion: 2
-        x: 239
-        y: 3
-        width: 70
-        height: 123
+        x: 1589
+        y: 36
+        width: 425
+        height: 748
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a2e5abafd58d900f0800000000000000
-      internalID: -1150150331666375126
+      spriteID: 312b97b9c4d83c950800000000000000
+      internalID: 6468168849999639059
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Walk Right_Sprites_3
+      name: Player_Move Left_3
       rect:
         serializedVersion: 2
-        x: 365
-        y: 2
-        width: 37
-        height: 126
+        x: 2378
+        y: 39
+        width: 283
+        height: 761
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -196,20 +196,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cd5fa0765c130ba60800000000000000
-      internalID: 7687699287828526556
+      spriteID: 63c9ed958b55bca10800000000000000
+      internalID: 1930731115528494134
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Walk Right_Sprites_4
+      name: Player_Move Left_4
       rect:
         serializedVersion: 2
-        x: 465
-        y: 0
-        width: 62
-        height: 124
+        x: 3034
+        y: 1
+        width: 385
+        height: 769
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,20 +218,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fb3eb4d0cf7b98940800000000000000
-      internalID: 5298968729760818111
+      spriteID: 839dad5aaa0d31040800000000000000
+      internalID: 4617263474330491192
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Walk Right_Sprites_5
+      name: Player_Move Left_5
       rect:
         serializedVersion: 2
-        x: 568
-        y: 2
-        width: 75
-        height: 123
+        x: 3704
+        y: 14
+        width: 475
+        height: 752
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -240,8 +240,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3ca716160737b5e30800000000000000
-      internalID: 4493311979739511491
+      spriteID: 2fe7b60e577f2f5e0800000000000000
+      internalID: -1877166009011699982
       vertices: []
       indices: 
       edges: []
@@ -260,12 +260,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Player_Walk Right_Sprites_0: -3396312646302359324
-      Player_Walk Right_Sprites_1: 4021997660385498741
-      Player_Walk Right_Sprites_2: -1150150331666375126
-      Player_Walk Right_Sprites_3: 7687699287828526556
-      Player_Walk Right_Sprites_4: 5298968729760818111
-      Player_Walk Right_Sprites_5: 4493311979739511491
+      Player_Move Left_0: 1403701886929245076
+      Player_Move Left_1: 41584726874090918
+      Player_Move Left_2: 6468168849999639059
+      Player_Move Left_3: 1930731115528494134
+      Player_Move Left_4: 4617263474330491192
+      Player_Move Left_5: -1877166009011699982
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
