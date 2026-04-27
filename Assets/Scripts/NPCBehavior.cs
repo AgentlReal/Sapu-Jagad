@@ -49,10 +49,26 @@ public class NPCBehavior : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance == null || GameManager.Instance.isInteracting || GameManager.Instance.isGameOver || interacted) return;
+        // 1. Check Game State
+        if (GameManager.Instance == null || GameManager.Instance.isInteracting || GameManager.Instance.isGameOver || interacted)
+        {
+            if (anim != null) anim.SetFloat("Horizontal", 0);
+            return;
+        }
 
-        transform.Translate(Vector2.right * data.moveSpeed * Time.deltaTime * Mathf.Sin(Time.time * 0.5f));
+        // 2. Handle Movement
+        float moveDirRaw = Mathf.Sin(Time.time * 0.5f);
+        float moveAmount = data.moveSpeed * Time.deltaTime * moveDirRaw;
+        transform.Translate(Vector2.right * moveAmount);
 
+        if (anim != null)
+        {
+            // Use discrete values (1 or -1) to trigger transitions reliably
+            float horizontalValue = moveDirRaw > 0 ? 1f : -1f;
+            anim.SetFloat("Horizontal", horizontalValue);
+        }
+
+        // 3. Handle Trash Spawning
         trashTimer -= Time.deltaTime;
         if (trashTimer <= 0)
         {
@@ -66,7 +82,6 @@ public class NPCBehavior : MonoBehaviour
         if (_trashPrefab != null)
         {
             Instantiate(_trashPrefab, transform.position, Quaternion.identity);
-            Debug.Log(data.npcName + " dropped trash.");
         }
     }
 
@@ -96,7 +111,6 @@ public class NPCBehavior : MonoBehaviour
     {
         if (player == null) return;
         
-        Debug.Log("Applying penalty from " + data.npcName + " (" + data.type + ")");
         switch (data.type)
         {
             case NPCType.IbuIbu:
