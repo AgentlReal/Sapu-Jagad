@@ -229,7 +229,8 @@ public class UIManager : MonoBehaviour
         if (evaluationOverlay == null) InitializeOverlays();
         if (evaluationOverlay == null) return;
 
-        bool win = cleanliness >= 70f && empathy >= 80f;
+        // Win if Cleanliness >= 70% AND Empathy >= 80, OR if Cleanliness reaches 100%
+        bool win = (cleanliness >= 70f && empathy >= 80f) || cleanliness >= 100f;
 
         if (resultTitle != null) resultTitle.text = win ? "Pahlawan Kebersihan!" : "Gagal Menjaga Taman";
         if (resultMessage != null) resultMessage.text = win ? "Selamat! Pak Darmo berhasil menjaga kebersihan dan hati warga." : "Maaf, taman masih kotor atau warga merasa tidak nyaman.";

@@ -51,6 +51,12 @@ public class GameManager : MonoBehaviour
     public void PickTrash()
     {
         trashPicked++;
+        
+        // Instant win if cleanliness reaches 100%
+        if (totalTrashSpawned > 0 && trashPicked >= totalTrashSpawned)
+        {
+            EndGame();
+        }
     }
 
     public void ModifyEmpathy(float amount)
