@@ -15,9 +15,11 @@ public class Spawner : MonoBehaviour
     public Rect spawnArea = new Rect(-10, -10, 20, 20);
     
     private List<GameObject> activeNPCs = new List<GameObject>();
+    private int npcLayerMask;
 
     private void Start()
     {
+        npcLayerMask = LayerMask.GetMask("NPCWall");
         SpawnInitialTrash();
         StartCoroutine(SpawnNPCRoutine());
     }
@@ -26,12 +28,25 @@ public class Spawner : MonoBehaviour
     {
         for (int i = 0; i < initialTrashCount; i++)
         {
-            Vector2 spawnPos = new Vector2(
+            Vector2 spawnPos = GetValidSpawnPos();
+            Instantiate(trashPrefab, spawnPos, Quaternion.identity);
+        }
+    }
+
+    private Vector2 GetValidSpawnPos()
+    {
+        Vector2 pos;
+        int attempts = 0;
+        do
+        {
+            pos = new Vector2(
                 Random.Range(spawnArea.xMin, spawnArea.xMax),
                 Random.Range(spawnArea.yMin, spawnArea.yMax)
             );
-            Instantiate(trashPrefab, spawnPos, Quaternion.identity);
-        }
+            attempts++;
+        } while (Physics2D.OverlapPoint(pos, npcLayerMask) != null && attempts < 10);
+        
+        return pos;
     }
 
     private IEnumerator SpawnNPCRoutine()
@@ -53,6 +68,13 @@ public class Spawner : MonoBehaviour
         if (npcTypes == null || npcTypes.Count == 0) return;
         
         Vector2 spawnPos = GetPerimeterSpawnPos();
+        
+        // Final check to avoid spawning inside a wall
+        if (Physics2D.OverlapPoint(spawnPos, npcLayerMask) != null) {
+            Debug.LogWarning("NPC Spawn blocked by NPCWall at " + spawnPos);
+            return; 
+        }
+
         GameObject npc = Instantiate(npcPrefab, spawnPos, Quaternion.identity);
         NPCBehavior behavior = npc.GetComponent<NPCBehavior>();
         if (behavior != null)

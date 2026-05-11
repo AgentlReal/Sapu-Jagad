@@ -6,16 +6,32 @@ public class NPCBehavior : MonoBehaviour
     public NPCData data;
     private bool interacted = false;
     private float trashTimer = 0f;
+    private float _movePhase = 0f;
+    private const float MOVE_FREQUENCY = 0.5f;
 
     private static GameObject _trashPrefab;
     private SpriteRenderer sr;
     private Animator anim;
     private Spawner _spawner;
+    private Rigidbody2D rb;
 
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        
+        // Ensure NPC is on the NPC layer
+        gameObject.layer = LayerMask.NameToLayer("NPC");
+
+        // Force Rigidbody settings for reliable collisions
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.gravityScale = 0;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        }
     }
 
     private void Start()
@@ -33,6 +49,9 @@ public class NPCBehavior : MonoBehaviour
         {
             _trashPrefab = _spawner.trashPrefab;
         }
+
+        // Randomize initial phase
+        _movePhase = Random.Range(0f, Mathf.PI * 2f);
     }
 
     public void ApplyNPCData()
@@ -47,33 +66,46 @@ public class NPCBehavior : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        // 1. Check Game State
         if (GameManager.Instance == null || GameManager.Instance.isInteracting || GameManager.Instance.isGameOver || interacted)
         {
+            if (rb != null) rb.linearVelocity = Vector2.zero;
             if (anim != null) anim.SetFloat("Horizontal", 0);
             return;
         }
 
-        // 2. Handle Movement
-        float moveDirRaw = Mathf.Sin(Time.time * 0.5f);
-        float moveAmount = data.moveSpeed * Time.deltaTime * moveDirRaw;
-        transform.Translate(Vector2.right * moveAmount);
+        // 1. Advance Phase
+        _movePhase += Time.fixedDeltaTime * MOVE_FREQUENCY;
+
+        // 2. Move via Velocity (Physical)
+        float moveDir = Mathf.Sin(_movePhase);
+        if (rb != null)
+        {
+            rb.linearVelocity = new Vector2(moveDir * data.moveSpeed, 0);
+        }
 
         if (anim != null)
         {
-            // Use discrete values (1 or -1) to trigger transitions reliably
-            float horizontalValue = moveDirRaw > 0 ? 1f : -1f;
-            anim.SetFloat("Horizontal", horizontalValue);
+            anim.SetFloat("Horizontal", moveDir);
         }
 
-        // 3. Handle Trash Spawning
-        trashTimer -= Time.deltaTime;
+        // 3. Handle Trash
+        trashTimer -= Time.fixedDeltaTime;
         if (trashTimer <= 0)
         {
             DropTrash();
             trashTimer = data.trashDropRate;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Bounce on Wall hit
+        if (collision.gameObject.layer == LayerMask.NameToLayer("NPCWall"))
+        {
+            _movePhase += Mathf.PI;
+            Debug.Log(data.npcName + " bounced off " + collision.gameObject.name);
         }
     }
 

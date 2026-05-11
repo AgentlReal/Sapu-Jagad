@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7259706526823363383}
   - component: {fileID: -7949439111549628469}
   - component: {fileID: 2303694652414495634}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: NPCPrefab
   m_TagString: NPC
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.0001, y: 0.0001}
+  m_Size: {x: 0.64, y: 0.64}
   m_EdgeRadius: 0
 --- !u!50 &7188711753180272174
 Rigidbody2D:
@@ -150,9 +150,9 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2883498061809391342}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
