@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
+using UnityEngine.UI;
 
 namespace SapuJagad
 {
@@ -16,11 +18,22 @@ namespace SapuJagad
         private float stunTimer = 0f;
         private float slowTimer = 0f;
 
+        [Header("Trash Picking")]
+        public float pickingDuration = 3.0f;
+        private bool isPickingTrash = false;
+        public GameObject pickingCanvas;
+        public Image pickingProgressBar;
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             rb.gravityScale = 0;
             anim = GetComponent<Animator>();
+
+            if (pickingCanvas != null)
+            {
+                pickingCanvas.SetActive(false);
+            }
         }
 
         // Using SendMessages behavior (OnMove, OnInteract)
@@ -49,8 +62,8 @@ namespace SapuJagad
 
         private void FixedUpdate()
         {
-            // Block movement if interacting or game over
-            if (GameManager.Instance != null && (GameManager.Instance.isInteracting || GameManager.Instance.isGameOver))
+            // Block movement if interacting, game over, or picking trash
+            if (GameManager.Instance != null && (GameManager.Instance.isInteracting || GameManager.Instance.isGameOver) || isPickingTrash)
             {
                 rb.linearVelocity = Vector2.zero;
                 UpdateAnimations(Vector2.zero);
@@ -86,9 +99,9 @@ namespace SapuJagad
 
         private void HandleInteraction()
         {
-            if (GameManager.Instance != null && (GameManager.Instance.isInteracting || GameManager.Instance.isGameOver)) 
+            if (GameManager.Instance != null && (GameManager.Instance.isInteracting || GameManager.Instance.isGameOver) || isPickingTrash) 
             {
-                Debug.Log("Interaction blocked by GameManager state");
+                Debug.Log("Interaction blocked by state");
                 return;
             }
 
@@ -101,9 +114,7 @@ namespace SapuJagad
 
                 if (col.CompareTag("Trash"))
                 {
-                    Destroy(col.gameObject);
-                    if (GameManager.Instance != null) GameManager.Instance.PickTrash();
-                    Debug.Log("Trash Picked!");
+                    StartCoroutine(PickTrashCoroutine(col.gameObject));
                     return;
                 }
                 
@@ -117,6 +128,50 @@ namespace SapuJagad
                     return;
                 }
             }
+        }
+
+        private IEnumerator PickTrashCoroutine(GameObject trashObject)
+        {
+            if (trashObject == null) yield break;
+
+            isPickingTrash = true;
+            
+            if (pickingCanvas != null) pickingCanvas.SetActive(true);
+            if (pickingProgressBar != null) pickingProgressBar.fillAmount = 0f;
+
+            float timer = 0f;
+            while (timer < pickingDuration)
+            {
+                // If trash gets destroyed by something else during picking
+                if (trashObject == null)
+                {
+                    CancelPicking();
+                    yield break;
+                }
+
+                timer += Time.deltaTime;
+                if (pickingProgressBar != null)
+                {
+                    pickingProgressBar.fillAmount = timer / pickingDuration;
+                }
+                yield return null;
+            }
+
+            // Finished picking
+            if (trashObject != null)
+            {
+                Destroy(trashObject);
+                if (GameManager.Instance != null) GameManager.Instance.PickTrash();
+                Debug.Log("Trash Picked!");
+            }
+
+            CancelPicking();
+        }
+
+        private void CancelPicking()
+        {
+            isPickingTrash = false;
+            if (pickingCanvas != null) pickingCanvas.SetActive(false);
         }
 
         public void ApplyStun(float duration) => stunTimer = duration;

@@ -766,8 +766,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5906ecd703ae9c74db5382a90e8528f1, type: 2}
   npcPrefab: {fileID: 2883498061809391342, guid: af053517e92922649ba59ea4b0a0b9cc, type: 3}
   initialTrashCount: 55
-  npcSpawnIntervalMin: 10
-  npcSpawnIntervalMax: 12
+  npcSpawnIntervalMin: 30
+  npcSpawnIntervalMax: 60
   spawnArea:
     serializedVersion: 2
     x: -10
@@ -1074,34 +1074,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1244226388415652550, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
-      propertyPath: m_Size.x
-      value: 0.8125
-      objectReference: {fileID: 0}
-    - target: {fileID: 1244226388415652550, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
-      propertyPath: m_Size.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1244226388415652550, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -467307283419413426, guid: 68225b6fa89f2cc438b88be04ea15837, type: 3}
-    - target: {fileID: 1244226388415652550, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1244226388415652550, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1244226388415652550, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1244226388415652550, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2127527312171382440, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1141,22 +1113,6 @@ PrefabInstance:
     - target: {fileID: 2127527312171382440, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7453436206997811861, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
-      propertyPath: m_SpriteTilingProperty.newSize.x
-      value: 0.8125
-      objectReference: {fileID: 0}
-    - target: {fileID: 7453436206997811861, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
-      propertyPath: m_SpriteTilingProperty.newSize.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7453436206997811861, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 0.8125
-      objectReference: {fileID: 0}
-    - target: {fileID: 7453436206997811861, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7773253119799779143, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
       propertyPath: m_Name
