@@ -266,6 +266,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
   miniGameAsset: {fileID: 9197481963319205126, guid: d7bf032d052ce764e902ffae9644dd15, type: 3}
   evaluationAsset: {fileID: 9197481963319205126, guid: 0726ae6ea00ccaf45a36272e9001927f, type: 3}
+  minimapCoverageWidth: 35
+  minimapCoverageHeight: 35
 --- !u!114 &297662718
 MonoBehaviour:
   m_ObjectHideFlags: 0

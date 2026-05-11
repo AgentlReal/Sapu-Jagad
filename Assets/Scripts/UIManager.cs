@@ -44,7 +44,12 @@ public class UIManager : MonoBehaviour
     private bool isMiniGameActive = false;
 
     private Dictionary<GameObject, VisualElement> minimapIcons = new Dictionary<GameObject, VisualElement>();
-    private float mapScale = 5f;
+    
+    [Header("Minimap Settings")]
+    [Tooltip("Total world units covered horizontally by the minimap")]
+    public float minimapCoverageWidth = 30f;
+    [Tooltip("Total world units covered vertically by the minimap")]
+    public float minimapCoverageHeight = 30f;
 
     private void Awake()
     {
@@ -211,8 +216,11 @@ public class UIManager : MonoBehaviour
             }
 
             Vector3 pos = obj.transform.position;
-            icon.style.left = 75f + (pos.x * mapScale);
-            icon.style.top = 75f - (pos.y * mapScale);
+            float scaleX = 150f / minimapCoverageWidth;
+            float scaleY = 150f / minimapCoverageHeight;
+            // Subtract half the size to ensure the icon's center aligns with the coordinate
+            icon.style.left = 75f + (pos.x * scaleX) - (size / 2f);
+            icon.style.top = 75f - (pos.y * scaleY) - (size / 2f);
         }
     }
 
