@@ -763,7 +763,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d76156919673b0f43b883bf405562bca, type: 2}
   - {fileID: 11400000, guid: 5906ecd703ae9c74db5382a90e8528f1, type: 2}
   npcPrefab: {fileID: 2883498061809391342, guid: af053517e92922649ba59ea4b0a0b9cc, type: 3}
-  initialTrashCount: 20
+  initialTrashCount: 55
   npcSpawnIntervalMin: 10
   npcSpawnIntervalMax: 12
   spawnArea:
@@ -1160,10 +1160,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 7952190761005723894, guid: 1d280f7311b53564c9677d8ca992988e, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 9be7a6280416e954faf23306a93d696b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
