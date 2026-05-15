@@ -280,6 +280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 281305f3a6cfd7e4ab3e8503f8280d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  level1Config: {fileID: 11400000, guid: 84438e77102a86942ba090595fbedb38, type: 2}
+  level2Config: {fileID: 11400000, guid: 3370d42f01f25ca4caaa8dfa4a863046, type: 2}
+  currentLevelConfig: {fileID: 0}
   gameDuration: 300
   currentTime: 300
   totalTrashSpawned: 0
@@ -768,6 +771,7 @@ MonoBehaviour:
   initialTrashCount: 55
   npcSpawnIntervalMin: 30
   npcSpawnIntervalMax: 60
+  maxActiveNPCs: 3
   spawnArea:
     serializedVersion: 2
     x: -10
@@ -939,6 +943,8 @@ MonoBehaviour:
   zoomValue: 7
   smoothSpeed: 1
   offset: {x: 0, y: 0, z: -10}
+  mapMin: {x: -17.5, y: -17.5}
+  mapMax: {x: 17.5, y: 17.5}
 --- !u!1 &1070351744
 GameObject:
   m_ObjectHideFlags: 0

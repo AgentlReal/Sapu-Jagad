@@ -36,6 +36,15 @@ namespace SapuJagad
             }
         }
 
+        private void Start()
+        {
+            // Apply level config if available
+            if (GameManager.Instance != null && GameManager.Instance.currentLevelConfig != null)
+            {
+                pickingDuration = GameManager.Instance.currentLevelConfig.trashPickingDuration;
+            }
+        }
+
         // Using SendMessages behavior (OnMove, OnInteract)
         public void OnMove(InputValue value)
         {
@@ -94,6 +103,7 @@ namespace SapuJagad
             if (speed > 0.01f)
             {
                 anim.SetFloat("Horizontal", move.x);
+                anim.SetFloat("Vertical", move.y);
             }
         }
 

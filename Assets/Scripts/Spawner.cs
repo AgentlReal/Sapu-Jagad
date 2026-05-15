@@ -11,6 +11,7 @@ public class Spawner : MonoBehaviour
     public int initialTrashCount = 20;
     public float npcSpawnIntervalMin = 30f;
     public float npcSpawnIntervalMax = 60f;
+    public int maxActiveNPCs = 3;
 
     public Rect spawnArea = new Rect(-10, -10, 20, 20);
     
@@ -20,6 +21,21 @@ public class Spawner : MonoBehaviour
     private void Start()
     {
         npcLayerMask = LayerMask.GetMask("NPCWall");
+
+        // Apply level config if available
+        if (GameManager.Instance != null && GameManager.Instance.currentLevelConfig != null)
+        {
+            var config = GameManager.Instance.currentLevelConfig;
+            initialTrashCount = config.initialTrashCount;
+            npcSpawnIntervalMin = config.npcSpawnIntervalMin;
+            npcSpawnIntervalMax = config.npcSpawnIntervalMax;
+            maxActiveNPCs = config.maxActiveNPCs;
+            spawnArea = config.spawnArea;
+
+            if (config.npcTypes != null && config.npcTypes.Count > 0)
+                npcTypes = config.npcTypes;
+        }
+
         SpawnInitialTrash();
         StartCoroutine(SpawnNPCRoutine());
     }
@@ -46,6 +62,12 @@ public class Spawner : MonoBehaviour
             attempts++;
         } while (Physics2D.OverlapPoint(pos, npcLayerMask) != null && attempts < 10);
         
+        // If still on a wall after attempts, nudge to nearest valid position
+        if (Physics2D.OverlapPoint(pos, npcLayerMask) != null)
+        {
+            pos = NudgeToValidPosition(pos);
+        }
+        
         return pos;
     }
 
@@ -56,7 +78,10 @@ public class Spawner : MonoBehaviour
             float waitTime = Random.Range(npcSpawnIntervalMin, npcSpawnIntervalMax);
             yield return new WaitForSeconds(waitTime);
 
-            if (activeNPCs.Count < 3)
+            // Clean null entries
+            activeNPCs.RemoveAll(n => n == null);
+
+            if (activeNPCs.Count < maxActiveNPCs)
             {
                 SpawnNPC();
             }
@@ -69,10 +94,21 @@ public class Spawner : MonoBehaviour
         
         Vector2 spawnPos = GetPerimeterSpawnPos();
         
-        // Final check to avoid spawning inside a wall
-        if (Physics2D.OverlapPoint(spawnPos, npcLayerMask) != null) {
-            Debug.LogWarning("NPC Spawn blocked by NPCWall at " + spawnPos);
-            return; 
+        // If spawn pos is on a wall, nudge instead of blocking
+        if (Physics2D.OverlapPoint(spawnPos, npcLayerMask) != null)
+        {
+            spawnPos = NudgeToValidPosition(spawnPos);
+            
+            // Final safety: make sure we're still inside the map
+            spawnPos.x = Mathf.Clamp(spawnPos.x, spawnArea.xMin, spawnArea.xMax);
+            spawnPos.y = Mathf.Clamp(spawnPos.y, spawnArea.yMin, spawnArea.yMax);
+            
+            // If still on a wall after nudging, skip this spawn
+            if (Physics2D.OverlapPoint(spawnPos, npcLayerMask) != null)
+            {
+                Debug.LogWarning("NPC Spawn blocked by NPCWall at " + spawnPos + " even after nudge.");
+                return;
+            }
         }
 
         GameObject npc = Instantiate(npcPrefab, spawnPos, Quaternion.identity);
@@ -83,6 +119,41 @@ public class Spawner : MonoBehaviour
         }
         
         activeNPCs.Add(npc);
+    }
+
+    /// <summary>
+    /// Tries to nudge a position out of a wall by testing nearby offsets.
+    /// Searches in expanding rings around the original point, staying within the spawn area.
+    /// </summary>
+    private Vector2 NudgeToValidPosition(Vector2 pos)
+    {
+        float[] offsets = { 0.5f, 1f, 1.5f, 2f, 3f, 4f };
+        Vector2[] directions = {
+            Vector2.up, Vector2.down, Vector2.left, Vector2.right,
+            new Vector2(1, 1).normalized, new Vector2(1, -1).normalized,
+            new Vector2(-1, 1).normalized, new Vector2(-1, -1).normalized
+        };
+
+        foreach (float offset in offsets)
+        {
+            foreach (Vector2 dir in directions)
+            {
+                Vector2 testPos = pos + dir * offset;
+                
+                // Must be inside the spawn area
+                if (testPos.x < spawnArea.xMin || testPos.x > spawnArea.xMax ||
+                    testPos.y < spawnArea.yMin || testPos.y > spawnArea.yMax)
+                    continue;
+                
+                if (Physics2D.OverlapPoint(testPos, npcLayerMask) == null)
+                {
+                    return testPos;
+                }
+            }
+        }
+        
+        // Fallback: return original position
+        return pos;
     }
 
     private Vector2 GetPerimeterSpawnPos()

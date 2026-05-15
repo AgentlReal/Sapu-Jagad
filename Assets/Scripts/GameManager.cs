@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,7 +7,17 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public float gameDuration = 300f; // 5 minutes
+    [Header("Level Configs")]
+    public LevelConfig level1Config;
+    public LevelConfig level2Config;
+
+    [HideInInspector]
+    public LevelConfig currentLevelConfig;
+
+    // Persists across scene reloads
+    public static int currentLevel = 1;
+
+    public float gameDuration = 300f;
     public float currentTime;
     
     public int totalTrashSpawned = 0;
@@ -24,11 +35,49 @@ public class GameManager : MonoBehaviour
             // Force reset state to prevent Inspector-induced freezes
             isGameOver = false;
             isInteracting = false;
+
+            // Select level config
+            if (currentLevel == 2 && level2Config != null)
+                currentLevelConfig = level2Config;
+            else if (level1Config != null)
+                currentLevelConfig = level1Config;
+
+            // Apply config
+            if (currentLevelConfig != null)
+            {
+                gameDuration = currentLevelConfig.gameDuration;
+            }
+
             currentTime = gameDuration;
         }
         else 
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        ApplyLevelConfig();
+    }
+
+    private void ApplyLevelConfig()
+    {
+        if (currentLevelConfig == null) return;
+
+        // Swap map sprite
+        var mapObj = GameObject.Find("Map 1_0");
+        if (mapObj != null && currentLevelConfig.mapSprite != null)
+        {
+            var sr = mapObj.GetComponent<SpriteRenderer>();
+            if (sr != null) sr.sprite = currentLevelConfig.mapSprite;
+        }
+
+        // Set camera bounds
+        var camFollow = Camera.main?.GetComponent<SapuJagad.CameraFollow>();
+        if (camFollow != null)
+        {
+            camFollow.SetBounds(currentLevelConfig.mapMin, currentLevelConfig.mapMax);
         }
     }
 
@@ -79,7 +128,23 @@ public class GameManager : MonoBehaviour
         
         if (UIManager.Instance != null)
         {
-            UIManager.Instance.ShowEvaluation(GetCleanlinessPercentage(), empathyScore);
+            float cleanThreshold = currentLevelConfig != null ? currentLevelConfig.cleanlinessThreshold : 70f;
+            float empathyThreshold = currentLevelConfig != null ? currentLevelConfig.empathyThreshold : 80f;
+            bool won = GetCleanlinessPercentage() >= cleanThreshold && empathyScore >= empathyThreshold;
+
+            UIManager.Instance.ShowEvaluation(GetCleanlinessPercentage(), empathyScore, currentLevel, won);
         }
+    }
+
+    public static void LoadLevel(int level)
+    {
+        currentLevel = level;
+        SceneManager.LoadScene("MainGame");
+    }
+
+    public static void ReturnToMainMenu()
+    {
+        currentLevel = 1;
+        SceneManager.LoadScene("MainMenu");
     }
 }

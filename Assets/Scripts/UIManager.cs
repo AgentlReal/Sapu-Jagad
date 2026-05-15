@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     private Label timerLabel;
     private Label empathyLabel;
     private Label cleanlinessLabel;
+    private Label levelLabel;
     private VisualElement minimapRoot;
 
     // Mini-game Elements
@@ -36,6 +37,8 @@ public class UIManager : MonoBehaviour
     private Label finalCleanliness;
     private Label finalEmpathy;
     private Button restartButton;
+    private Button nextButton;
+    private Button selesaiButton;
 
     private List<string> targetWords;
     private List<string> currentAttempt;
@@ -74,7 +77,14 @@ public class UIManager : MonoBehaviour
         timerLabel = root.Q<Label>("Timer");
         empathyLabel = root.Q<Label>("Empathy");
         cleanlinessLabel = root.Q<Label>("Cleanliness");
+        levelLabel = root.Q<Label>("LevelLabel");
         minimapRoot = root.Q<VisualElement>("Minimap");
+
+        // Show current level
+        if (levelLabel != null && GameManager.Instance != null && GameManager.Instance.currentLevelConfig != null)
+        {
+            levelLabel.text = GameManager.Instance.currentLevelConfig.levelName;
+        }
 
         InitializeOverlays();
     }
@@ -137,11 +147,25 @@ public class UIManager : MonoBehaviour
             finalCleanliness = evaluationOverlay.Q<Label>("FinalCleanliness");
             finalEmpathy = evaluationOverlay.Q<Label>("FinalEmpathy");
             restartButton = evaluationOverlay.Q<Button>("RestartButton");
+            nextButton = evaluationOverlay.Q<Button>("NextButton");
+            selesaiButton = evaluationOverlay.Q<Button>("SelesaiButton");
 
             if (restartButton != null)
             {
                 restartButton.clicked -= RestartGame;
                 restartButton.clicked += RestartGame;
+            }
+
+            if (nextButton != null)
+            {
+                nextButton.clicked -= GoToNextLevel;
+                nextButton.clicked += GoToNextLevel;
+            }
+
+            if (selesaiButton != null)
+            {
+                selesaiButton.clicked -= GoToMainMenu;
+                selesaiButton.clicked += GoToMainMenu;
             }
         }
     }
@@ -224,18 +248,30 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShowEvaluation(float cleanliness, float empathy)
+    public void ShowEvaluation(float cleanliness, float empathy, int levelNumber, bool won)
     {
         if (evaluationOverlay == null) InitializeOverlays();
         if (evaluationOverlay == null) return;
 
-        // Win if Cleanliness >= 70% AND Empathy >= 80, OR if Cleanliness reaches 100%
-        bool win = cleanliness >= 70f && empathy >= 80f;
-
-        if (resultTitle != null) resultTitle.text = win ? "Pahlawan Kebersihan!" : "Gagal Menjaga Taman";
-        if (resultMessage != null) resultMessage.text = win ? "Selamat! Pak Darmo berhasil menjaga kebersihan dan hati warga." : "Maaf, taman masih kotor atau warga merasa tidak nyaman.";
+        if (resultTitle != null) resultTitle.text = won ? "Pahlawan Kebersihan!" : "Gagal Menjaga Taman";
+        if (resultMessage != null) resultMessage.text = won ? "Selamat! Pak Darmo berhasil menjaga kebersihan dan hati warga." : "Maaf, taman masih kotor atau warga merasa tidak nyaman.";
         if (finalCleanliness != null) finalCleanliness.text = "Kebersihan Akhir: " + Mathf.FloorToInt(cleanliness) + "%";
         if (finalEmpathy != null) finalEmpathy.text = "Empati Akhir: " + Mathf.FloorToInt(empathy);
+
+        // Show/hide buttons based on level and outcome
+        if (restartButton != null) restartButton.style.display = DisplayStyle.Flex;
+
+        if (nextButton != null)
+        {
+            // Show "Next" only when level 1 is won
+            nextButton.style.display = (won && levelNumber == 1) ? DisplayStyle.Flex : DisplayStyle.None;
+        }
+
+        if (selesaiButton != null)
+        {
+            // Show "Selesai" only when level 2 is won
+            selesaiButton.style.display = (won && levelNumber == 2) ? DisplayStyle.Flex : DisplayStyle.None;
+        }
 
         var actualOverlay = evaluationOverlay.Q("EvaluationOverlay");
         if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.Flex;
@@ -244,6 +280,16 @@ public class UIManager : MonoBehaviour
     private void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void GoToNextLevel()
+    {
+        GameManager.LoadLevel(2);
+    }
+
+    private void GoToMainMenu()
+    {
+        GameManager.ReturnToMainMenu();
     }
 
     public void StartMiniGame(TeguranData data, NPCBehavior npc)

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf2ad6d8c3650ac468d7e979eebdf2c4, type: 3}
+  m_Name: Level2Config
+  m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
+  levelName: Level 2
+  levelNumber: 2
+  mapSprite: {fileID: -5687840249154085617, guid: 4786bebb2dabd79b9ac08bff37913933, type: 3}
+  gameDuration: 240
+  initialTrashCount: 70
+  npcSpawnIntervalMin: 15
+  npcSpawnIntervalMax: 40
+  maxActiveNPCs: 5
+  trashPickingDuration: 3.5
+  npcTypes:
+  - {fileID: 11400000, guid: 5f9d7b5932813854884ec6fa284a5502, type: 2}
+  - {fileID: 11400000, guid: d76156919673b0f43b883bf405562bca, type: 2}
+  - {fileID: 11400000, guid: 5906ecd703ae9c74db5382a90e8528f1, type: 2}
+  cleanlinessThreshold: 75
+  empathyThreshold: 85
+  mapMin: {x: -22.5, y: -22.5}
+  mapMax: {x: 22.5, y: 22.5}
+  spawnArea:
+    serializedVersion: 2
+    x: -15
+    y: -15
+    width: 30
+    height: 30
