@@ -39,12 +39,12 @@ public class UIManager : MonoBehaviour
 
     private List<string> targetWords;
     private List<string> currentAttempt;
-    private float miniTimer = 10f;
+    private float miniTimer;
     private NPCBehavior currentNPC;
     private bool isMiniGameActive = false;
 
     private Dictionary<GameObject, VisualElement> minimapIcons = new Dictionary<GameObject, VisualElement>();
-    
+
     [Header("Minimap Settings")]
     [Tooltip("Total world units covered horizontally by the minimap")]
     public float minimapCoverageWidth = 30f;
@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-        
+
         uiDocument = GetComponent<UIDocument>();
     }
 
@@ -68,7 +68,7 @@ public class UIManager : MonoBehaviour
     {
         if (uiDocument == null) uiDocument = GetComponent<UIDocument>();
         root = uiDocument.rootVisualElement;
-        
+
         if (root == null) return;
 
         timerLabel = root.Q<Label>("Timer");
@@ -86,7 +86,7 @@ public class UIManager : MonoBehaviour
 
         // Clean existing clones if any
         var oldMini = root.Q("MiniGameOverlay");
-        if (oldMini != null && miniGameOverlay == null) miniGameOverlay = oldMini.parent; 
+        if (oldMini != null && miniGameOverlay == null) miniGameOverlay = oldMini.parent;
 
         // Mini-game Overlay
         if (miniGameAsset != null && miniGameOverlay == null)
@@ -137,7 +137,7 @@ public class UIManager : MonoBehaviour
             finalCleanliness = evaluationOverlay.Q<Label>("FinalCleanliness");
             finalEmpathy = evaluationOverlay.Q<Label>("FinalEmpathy");
             restartButton = evaluationOverlay.Q<Button>("RestartButton");
-            
+
             if (restartButton != null)
             {
                 restartButton.clicked -= RestartGame;
@@ -166,7 +166,7 @@ public class UIManager : MonoBehaviour
 
             if (empathyLabel != null)
                 empathyLabel.text = "Empati: " + GameManager.Instance.empathyScore;
-            
+
             if (cleanlinessLabel != null)
                 cleanlinessLabel.text = "Kebersihan: " + Mathf.FloorToInt(GameManager.Instance.GetCleanlinessPercentage()) + "%";
         }
@@ -230,7 +230,7 @@ public class UIManager : MonoBehaviour
         if (evaluationOverlay == null) return;
 
         // Win if Cleanliness >= 70% AND Empathy >= 80, OR if Cleanliness reaches 100%
-        bool win = (cleanliness >= 70f && empathy >= 80f) || cleanliness >= 100f;
+        bool win = cleanliness >= 70f && empathy >= 80f;
 
         if (resultTitle != null) resultTitle.text = win ? "Pahlawan Kebersihan!" : "Gagal Menjaga Taman";
         if (resultMessage != null) resultMessage.text = win ? "Selamat! Pak Darmo berhasil menjaga kebersihan dan hati warga." : "Maaf, taman masih kotor atau warga merasa tidak nyaman.";
@@ -254,7 +254,7 @@ public class UIManager : MonoBehaviour
         currentNPC = npc;
         GameManager.Instance.isInteracting = true;
         isMiniGameActive = true;
-        
+
         var actualOverlay = miniGameOverlay.Q("MiniGameOverlay");
         if (actualOverlay != null) actualOverlay.style.display = DisplayStyle.Flex;
 
@@ -262,10 +262,10 @@ public class UIManager : MonoBehaviour
         if (npcPortrait != null && currentNPC.data != null)
             npcPortrait.sprite = currentNPC.data.faceNeutral;
 
-        miniTimer = 10f;
+        miniTimer = 15f;
         currentAttempt = new List<string>();
         currentSentenceLabel.text = "";
-        
+
         if (hintLabel != null) hintLabel.text = "Hint: " + data.fullSentence;
 
         targetWords = data.fullSentence.Split(' ', System.StringSplitOptions.RemoveEmptyEntries).ToList();
@@ -302,7 +302,7 @@ public class UIManager : MonoBehaviour
 
         if (success)
         {
-            GameManager.Instance.ModifyEmpathy(2);
+            GameManager.Instance.ModifyEmpathy(5);
             if (npcPortrait != null && currentNPC != null) npcPortrait.sprite = currentNPC.data.faceHappy;
         }
         else
@@ -310,7 +310,7 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.ModifyEmpathy(-10);
             if (npcPortrait != null && currentNPC != null) npcPortrait.sprite = currentNPC.data.faceAngry;
         }
-        
+
         StartCoroutine(CloseMiniGameRoutine(success));
     }
 

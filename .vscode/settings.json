@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Sapu Jagad.slnx",
+    "dotnet.defaultSolution": "Sapu-Jagad.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }
