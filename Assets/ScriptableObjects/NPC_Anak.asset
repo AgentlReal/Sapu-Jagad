@@ -20,6 +20,12 @@ MonoBehaviour:
   penaltyDuration: 5
   dialogueOptions:
   - {fileID: 11400000, guid: aefb3b62be8b174479334b2b6a14f79a, type: 2}
+  - {fileID: 11400000, guid: c6545c6bc00ebf44c819b33a72a44f48, type: 2}
+  - {fileID: 11400000, guid: dbd2dc894b3a87c46bcd5f6e1612b7f0, type: 2}
+  - {fileID: 11400000, guid: 9188cd2e23e53cc41b966e8bfe3b86ac, type: 2}
+  - {fileID: 11400000, guid: 8ff74d022ab14114a9c964945bd06b69, type: 2}
+  - {fileID: 11400000, guid: 661fdf98320e88240bead9fd093d5a6d, type: 2}
+  - {fileID: 11400000, guid: e913531dedc27cf4f9cefdd3c0270b8d, type: 2}
   faceNeutral: {fileID: 4084995714042413245, guid: aa0e9b48b6fbc624ca50ca71123b63fd, type: 3}
   faceHappy: {fileID: 6201972358288404113, guid: 9d5da18bb4fd7324aa25da3fc781368f, type: 3}
   faceAngry: {fileID: 1560569401422618266, guid: 24920dc303ab46d4c996ce411bd54671, type: 3}

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0cd9fca40a603b4c8d591630c77571c, type: 3}
-  m_Name: Teguran_Ibu_1
+  m_Name: Teguran_Ormas_3
   m_EditorClassIdentifier: Assembly-CSharp::TeguranData
-  targetType: 0
-  fullSentence: Ibu-ibu, tolong dibuang di tempat sampah ya, biar lingkungan bersih!
+  targetType: 2
+  fullSentence: Mas, tolong buang sampah pada tempatnya, biar tidak berantem!

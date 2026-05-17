@@ -127,10 +127,15 @@ public class GameManager : MonoBehaviour
     {
         trashPicked++;
         
-        // Instant win if cleanliness reaches 100%
+        // Instant win if cleanliness reaches 100% AND no active NPCs remain
         if (totalTrashSpawned > 0 && trashPicked >= totalTrashSpawned)
         {
-            EndGame();
+            // Check if any NPCs are still active
+            var activeNPCs = FindObjectsByType<NPCBehavior>(FindObjectsSortMode.None);
+            if (activeNPCs.Length == 0)
+            {
+                EndGame();
+            }
         }
     }
 
