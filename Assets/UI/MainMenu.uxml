@@ -1,34 +1,25 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
-    <ui:Style src="project://database/Assets/UI/MainMenu.uss" />
-    <ui:VisualElement name="MainMenuRoot" style="flex-grow: 1; background-image: url('project://database/Assets/Textures/UI/main_menu.png'); -unity-background-scale-mode: scale-and-crop; justify-content: center; align-items: center;">
-        
-        <ui:VisualElement name="MenuButtons" style="align-items: center; margin-top: 80px;">
-            <ui:Button name="PlayButton" style="width: 300px; height: 120px; background-image: url('project://database/Assets/Textures/UI/play_button.png'); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0,0,0,0); border-width: 0; margin-bottom: 15px;" />
-            <ui:Button name="HowToPlayButton" style="width: 300px; height: 117px; background-image: url('project://database/Assets/Textures/UI/how_to_play_button.png'); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0,0,0,0); border-width: 0; margin-bottom: 15px;" />
-            <ui:Button name="SettingsButton" style="width: 300px; height: 117px; background-image: url('project://database/Assets/Textures/UI/settings_button.png'); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0,0,0,0); border-width: 0; margin-bottom: 15px;" />
-            <ui:Button name="ExitButton" style="width: 300px; height: 117px; background-image: url('project://database/Assets/Textures/UI/exit_button.png'); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0,0,0,0); border-width: 0;" />
+    <Style src="project://database/Assets/UI/MainMenu.uss?fileID=7433441132597879392&amp;guid=3c34b4dae8821c34b87304e950b2884d&amp;type=3#MainMenu"/>
+    <ui:VisualElement name="MainMenuRoot" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Textures/UI/main_menu.png?fileID=21300000&amp;guid=7108f360578523d4d9a5ad6354fc5ea4&amp;type=3#main_menu&quot;); -unity-background-scale-mode: scale-and-crop; justify-content: center; align-items: center;">
+        <ui:VisualElement name="MenuButtons" style="align-items: center; margin-top: 0; left: 15%; position: relative; top: 15%; align-content: flex-start; align-self: flex-start; justify-content: flex-start;">
+            <ui:Button name="PlayButton" style="width: 300px; height: 120px; background-image: url(&quot;project://database/Assets/Textures/UI/play_button.png?fileID=21300000&amp;guid=57c19ca3fea08644f9232662717144f9&amp;type=3#play_button&quot;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0, 0, 0, 0); border-width: 0; margin-bottom: 15px;"/>
+            <ui:Button name="SettingsButton" style="width: 300px; height: 117px; background-image: url(&quot;project://database/Assets/Textures/UI/settings_button.png?fileID=21300000&amp;guid=0b853ffe74216544bbfa74856d218a37&amp;type=3#settings_button&quot;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0, 0, 0, 0); border-width: 0; margin-bottom: 15px;"/>
+            <ui:Button name="ExitButton" style="width: 300px; height: 117px; background-image: url(&quot;project://database/Assets/Textures/UI/exit_button.png?fileID=21300000&amp;guid=6f5449ae37b49c14dab1336315d3b994&amp;type=3#exit_button&quot;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0, 0, 0, 0); border-width: 0;"/>
         </ui:VisualElement>
-
-        <ui:VisualElement name="SettingsPanel" style="display: none; position: absolute; width: 100%; height: 100%; background-image: url('project://database/Assets/Textures/UI/settings_menu.png'); -unity-background-scale-mode: scale-and-crop; justify-content: center; align-items: center;">
-            
-            <ui:VisualElement name="SliderContainer" style="align-items: center; margin-top: 40px; width: 500px;">
-                <ui:VisualElement name="VolumeRow" style="flex-direction: row; align-items: center; width: 100%; margin-bottom: 30px;">
-                    <ui:Label text="Volume" style="font-size: 26px; color: white; width: 140px; -unity-font-style: bold;" />
-                    <ui:Slider name="VolumeSlider" low-value="0" high-value="1" value="1" style="flex-grow: 1;" />
+        <ui:VisualElement name="SettingsPanel" style="display: none; position: absolute; width: 100%; height: 100%; background-image: url(&quot;project://database/Assets/Textures/UI/settings_menu.png?fileID=21300000&amp;guid=2051daeb3b777144cbe0062f5d4b59f3&amp;type=3#settings_menu&quot;); -unity-background-scale-mode: scale-and-crop; justify-content: flex-end; align-items: center; padding-bottom: 60px;">
+            <ui:VisualElement name="SliderContainer" style="align-items: center; margin-top: 0; width: 500px; padding-right: 100px; justify-content: flex-start;">
+                <ui:VisualElement name="VolumeRow" style="flex-direction: row; align-items: center; width: 100%; margin-bottom: 120px; margin-top: 0;">
+                    <ui:Slider name="VolumeSlider" low-value="0" high-value="1" value="1" style="flex-grow: 1;"/>
                 </ui:VisualElement>
-
-                <ui:VisualElement name="SFXRow" style="flex-direction: row; align-items: center; width: 100%; margin-bottom: 40px;">
-                    <ui:Label text="SFX" style="font-size: 26px; color: white; width: 140px; -unity-font-style: bold;" />
-                    <ui:Slider name="SFXSlider" low-value="0" high-value="1" value="1" style="flex-grow: 1;" />
+                <ui:VisualElement name="SFXRow" style="flex-direction: row; align-items: center; width: 100%; margin-bottom: 100px;">
+                    <ui:Slider name="SFXSlider" low-value="0" high-value="1" value="1" style="flex-grow: 1;"/>
                 </ui:VisualElement>
-
-                <ui:Button name="CloseSettingsButton" style="width: 240px; height: 94px; background-image: url('project://database/Assets/Textures/UI/back_button.png'); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0,0,0,0); border-width: 0;" />
+                <ui:Button name="HowToPlayButton" style="width: 300px; height: 117px; background-image: url(&quot;project://database/Assets/Textures/UI/how_to_play_button.png?fileID=21300000&amp;guid=58db62e31684d0d489830631aaa135ff&amp;type=3#how_to_play_button&quot;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0, 0, 0, 0); border-width: 0; margin-bottom: 195px;"/>
             </ui:VisualElement>
+            <ui:Button name="CloseSettingsButton" style="width: 240px; height: 94px; background-image: url(&quot;project://database/Assets/Textures/UI/back_button.png?fileID=21300000&amp;guid=a1801830b62c7384cbfb8060387744af&amp;type=3#back_button&quot;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0, 0, 0, 0); border-width: 0;"/>
         </ui:VisualElement>
-
-        <ui:VisualElement name="HowToPlayPanel" style="display: none; position: absolute; width: 100%; height: 100%; background-image: url('project://database/Assets/Textures/UI/how_to_play_menu.png'); -unity-background-scale-mode: scale-and-crop; justify-content: flex-end; align-items: center; padding-bottom: 60px;">
-            <ui:Button name="CloseHowToPlayButton" style="width: 240px; height: 94px; background-image: url('project://database/Assets/Textures/UI/back_button.png'); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0,0,0,0); border-width: 0;" />
+        <ui:VisualElement name="HowToPlayPanel" style="display: none; position: absolute; width: 100%; height: 100%; background-image: url(&quot;project://database/Assets/Textures/UI/how_to_play_menu.png?fileID=21300000&amp;guid=8b49dc005e33bb44896cbb2425bb3152&amp;type=3#how_to_play_menu&quot;); -unity-background-scale-mode: scale-and-crop; justify-content: flex-end; align-items: center; padding-bottom: 60px;">
+            <ui:Button name="CloseHowToPlayButton" style="width: 240px; height: 94px; background-image: url(&quot;project://database/Assets/Textures/UI/back_button.png?fileID=21300000&amp;guid=a1801830b62c7384cbfb8060387744af&amp;type=3#back_button&quot;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0, 0, 0, 0); border-width: 0;"/>
         </ui:VisualElement>
-
     </ui:VisualElement>
 </ui:UXML>
