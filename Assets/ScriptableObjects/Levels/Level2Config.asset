@@ -15,12 +15,12 @@ MonoBehaviour:
   levelName: Level 2
   levelNumber: 2
   mapSprite: {fileID: -5687840249154085617, guid: 4786bebb2dabd79b9ac08bff37913933, type: 3}
-  gameDuration: 240
-  initialTrashCount: 70
-  npcSpawnIntervalMin: 15
-  npcSpawnIntervalMax: 40
-  maxActiveNPCs: 5
-  trashPickingDuration: 3.5
+  gameDuration: 300
+  initialTrashCount: 55
+  npcSpawnIntervalMin: 25
+  npcSpawnIntervalMax: 35
+  maxActiveNPCs: 4
+  trashPickingDuration: 1.5
   npcTypes:
   - {fileID: 11400000, guid: 5f9d7b5932813854884ec6fa284a5502, type: 2}
   - {fileID: 11400000, guid: d76156919673b0f43b883bf405562bca, type: 2}
