@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine.UI;
+using TMPro;
 
 namespace SapuJagad
 {
@@ -24,6 +25,13 @@ namespace SapuJagad
         public GameObject pickingCanvas;
         public Image pickingProgressBar;
 
+        [Header("Status Text")]
+        private TextMeshPro statusText;
+        private float statusAlpha = 0f;
+        private bool statusFadeIn = true;
+
+        private bool wasMoving = false;
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -33,6 +41,30 @@ namespace SapuJagad
             if (pickingCanvas != null)
             {
                 pickingCanvas.SetActive(false);
+            }
+
+            // Create floating status text as child
+            CreateStatusText();
+        }
+
+        private void CreateStatusText()
+        {
+            GameObject textObj = new GameObject("StatusText");
+            textObj.transform.SetParent(transform);
+            textObj.transform.localPosition = new Vector3(0, 1.2f, 0);
+
+            statusText = textObj.AddComponent<TextMeshPro>();
+            statusText.text = "";
+            statusText.fontSize = 4f;
+            statusText.alignment = TextAlignmentOptions.Center;
+            statusText.sortingOrder = 100;
+            statusText.enabled = false;
+
+            // Make it render in front of sprites
+            var renderer = statusText.GetComponent<MeshRenderer>();
+            if (renderer != null)
+            {
+                renderer.sortingOrder = 100;
             }
         }
 
@@ -67,6 +99,60 @@ namespace SapuJagad
 
             if (slowTimer > 0)
                 slowTimer -= Time.deltaTime;
+
+            UpdateStatusText();
+        }
+
+        private void UpdateStatusText()
+        {
+            if (statusText == null) return;
+
+            if (stunTimer > 0)
+            {
+                statusText.enabled = true;
+                statusText.text = "Stunned";
+                statusText.color = GetPulsingColor(new Color(1f, 0.2f, 0.2f)); // Red
+            }
+            else if (slowTimer > 0)
+            {
+                statusText.enabled = true;
+                statusText.text = "Slowed";
+                statusText.color = GetPulsingColor(new Color(1f, 0.9f, 0.2f)); // Yellow
+            }
+            else
+            {
+                statusText.enabled = false;
+                statusText.text = "";
+                statusAlpha = 0f;
+                statusFadeIn = true;
+            }
+        }
+
+        private Color GetPulsingColor(Color baseColor)
+        {
+            // Pulse alpha between 0.3 and 1.0
+            float pulseSpeed = 3f;
+            if (statusFadeIn)
+            {
+                statusAlpha += Time.deltaTime * pulseSpeed;
+                if (statusAlpha >= 1f)
+                {
+                    statusAlpha = 1f;
+                    statusFadeIn = false;
+                }
+            }
+            else
+            {
+                statusAlpha -= Time.deltaTime * pulseSpeed;
+                if (statusAlpha <= 0.3f)
+                {
+                    statusAlpha = 0.3f;
+                    statusFadeIn = true;
+                }
+            }
+
+            baseColor.a = statusAlpha;
+            return baseColor;
         }
 
         private void FixedUpdate()
@@ -76,6 +162,7 @@ namespace SapuJagad
             {
                 rb.linearVelocity = Vector2.zero;
                 UpdateAnimations(Vector2.zero);
+                HandleFootstepSFX(false);
                 return;
             }
 
@@ -91,6 +178,24 @@ namespace SapuJagad
 
             rb.linearVelocity = moveInput * currentSpeed;
             UpdateAnimations(moveInput);
+
+            bool isMoving = moveInput.magnitude > 0.01f && currentSpeed > 0;
+            HandleFootstepSFX(isMoving);
+        }
+
+        private void HandleFootstepSFX(bool isMoving)
+        {
+            if (SFXManager.Instance == null) return;
+
+            if (isMoving && !wasMoving)
+            {
+                SFXManager.Instance.PlayFootstep();
+            }
+            else if (!isMoving && wasMoving)
+            {
+                SFXManager.Instance.StopFootstep();
+            }
+            wasMoving = isMoving;
         }
 
         private void UpdateAnimations(Vector2 move)
@@ -149,6 +254,10 @@ namespace SapuJagad
             if (pickingCanvas != null) pickingCanvas.SetActive(true);
             if (pickingProgressBar != null) pickingProgressBar.fillAmount = 0f;
 
+            // Start picking SFX
+            if (SFXManager.Instance != null)
+                SFXManager.Instance.PlayPickingProgress();
+
             float timer = 0f;
             while (timer < pickingDuration)
             {
@@ -173,6 +282,10 @@ namespace SapuJagad
                 Destroy(trashObject);
                 if (GameManager.Instance != null) GameManager.Instance.PickTrash();
                 Debug.Log("Trash Picked!");
+
+                // Play success SFX
+                if (SFXManager.Instance != null)
+                    SFXManager.Instance.PlayTrashPicked();
             }
 
             CancelPicking();
@@ -182,6 +295,10 @@ namespace SapuJagad
         {
             isPickingTrash = false;
             if (pickingCanvas != null) pickingCanvas.SetActive(false);
+
+            // Stop picking SFX
+            if (SFXManager.Instance != null)
+                SFXManager.Instance.StopPickingProgress();
         }
 
         public void ApplyStun(float duration) => stunTimer = duration;

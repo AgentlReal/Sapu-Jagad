@@ -59,6 +59,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         ApplyLevelConfig();
+
+        // Start gameplay music
+        if (MusicManager.Instance != null)
+            MusicManager.Instance.PlayGameplayMusic();
     }
 
     private void ApplyLevelConfig()
@@ -125,6 +129,10 @@ public class GameManager : MonoBehaviour
         
         isGameOver = true;
         Debug.Log("Game Over! Cleanliness: " + GetCleanlinessPercentage() + "%, Empathy: " + empathyScore);
+
+        // Stop gameplay music
+        if (MusicManager.Instance != null)
+            MusicManager.Instance.StopMusic();
         
         if (UIManager.Instance != null)
         {

@@ -253,6 +253,13 @@ public class UIManager : MonoBehaviour
         if (evaluationOverlay == null) InitializeOverlays();
         if (evaluationOverlay == null) return;
 
+        // Play win/lose SFX
+        if (SFXManager.Instance != null)
+        {
+            if (won) SFXManager.Instance.PlayWin();
+            else SFXManager.Instance.PlayLose();
+        }
+
         if (resultTitle != null) resultTitle.text = won ? "Pahlawan Kebersihan!" : "Gagal Menjaga Taman";
         if (resultMessage != null) resultMessage.text = won ? "Selamat! Pak Darmo berhasil menjaga kebersihan dan hati warga." : "Maaf, taman masih kotor atau warga merasa tidak nyaman.";
         if (finalCleanliness != null) finalCleanliness.text = "Kebersihan Akhir: " + Mathf.FloorToInt(cleanliness) + "%";
@@ -355,6 +362,16 @@ public class UIManager : MonoBehaviour
         {
             GameManager.Instance.ModifyEmpathy(-10);
             if (npcPortrait != null && currentNPC != null) npcPortrait.sprite = currentNPC.data.faceAngry;
+
+            // Play empathy loss SFX
+            if (SFXManager.Instance != null)
+                SFXManager.Instance.PlayEmpathyLoss();
+        }
+
+        // Play NPC reaction SFX
+        if (SFXManager.Instance != null && currentNPC != null && currentNPC.data != null)
+        {
+            SFXManager.Instance.PlayNPCReaction(currentNPC.data.type, success);
         }
 
         StartCoroutine(CloseMiniGameRoutine(success));

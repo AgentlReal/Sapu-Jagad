@@ -14,9 +14,20 @@ public class Spawner : MonoBehaviour
     public int maxActiveNPCs = 3;
 
     public Rect spawnArea = new Rect(-10, -10, 20, 20);
+
+    [Header("Trash Sprite Variants")]
+    public Sprite[] trashSpriteVariants;
     
     private List<GameObject> activeNPCs = new List<GameObject>();
     private int npcLayerMask;
+
+    // Singleton-like access for NPCBehavior to get sprites
+    public static Spawner Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -45,7 +56,23 @@ public class Spawner : MonoBehaviour
         for (int i = 0; i < initialTrashCount; i++)
         {
             Vector2 spawnPos = GetValidSpawnPos();
-            Instantiate(trashPrefab, spawnPos, Quaternion.identity);
+            GameObject trash = Instantiate(trashPrefab, spawnPos, Quaternion.identity);
+            AssignRandomTrashSprite(trash);
+        }
+    }
+
+    /// <summary>
+    /// Assigns a random sprite variant to a trash GameObject.
+    /// </summary>
+    public void AssignRandomTrashSprite(GameObject trashObj)
+    {
+        if (trashSpriteVariants == null || trashSpriteVariants.Length == 0) return;
+        if (trashObj == null) return;
+
+        var sr = trashObj.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            sr.sprite = trashSpriteVariants[Random.Range(0, trashSpriteVariants.Length)];
         }
     }
 

@@ -113,7 +113,12 @@ public class NPCBehavior : MonoBehaviour
     {
         if (_trashPrefab != null)
         {
-            Instantiate(_trashPrefab, transform.position, Quaternion.identity);
+            GameObject trash = Instantiate(_trashPrefab, transform.position, Quaternion.identity);
+            // Assign random sprite variant
+            if (Spawner.Instance != null)
+            {
+                Spawner.Instance.AssignRandomTrashSprite(trash);
+            }
         }
     }
 
@@ -151,7 +156,12 @@ public class NPCBehavior : MonoBehaviour
             case NPCType.AnakKecil:
                 for(int i=0; i<5; i++) {
                     Vector3 offset = Random.insideUnitCircle * 2f;
-                    Instantiate(_trashPrefab, player.transform.position + offset, Quaternion.identity);
+                    GameObject trash = Instantiate(_trashPrefab, player.transform.position + offset, Quaternion.identity);
+                    // Assign random sprite variant to penalty trash
+                    if (Spawner.Instance != null)
+                    {
+                        Spawner.Instance.AssignRandomTrashSprite(trash);
+                    }
                 }
                 break;
             case NPCType.OknumOrmas:
