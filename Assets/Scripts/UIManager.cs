@@ -345,6 +345,8 @@ public class UIManager : MonoBehaviour
             npcPortrait.sprite = currentNPC.data.faceNeutral;
 
         miniTimer = 15f;
+        if (GameManager.Instance != null && GameManager.Instance.currentLevelConfig != null)
+            miniTimer = GameManager.Instance.currentLevelConfig.miniGameDuration;
         currentAttempt = new List<string>();
         currentSentenceLabel.text = "";
 

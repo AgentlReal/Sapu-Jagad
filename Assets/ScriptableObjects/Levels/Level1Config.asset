@@ -21,6 +21,7 @@ MonoBehaviour:
   npcSpawnIntervalMax: 45
   maxActiveNPCs: 3
   trashPickingDuration: 1.5
+  miniGameDuration: 20
   npcTypes:
   - {fileID: 11400000, guid: 5f9d7b5932813854884ec6fa284a5502, type: 2}
   - {fileID: 11400000, guid: d76156919673b0f43b883bf405562bca, type: 2}

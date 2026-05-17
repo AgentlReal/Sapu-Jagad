@@ -21,12 +21,13 @@ MonoBehaviour:
   npcSpawnIntervalMax: 35
   maxActiveNPCs: 4
   trashPickingDuration: 1.5
+  miniGameDuration: 15
   npcTypes:
   - {fileID: 11400000, guid: 5f9d7b5932813854884ec6fa284a5502, type: 2}
   - {fileID: 11400000, guid: d76156919673b0f43b883bf405562bca, type: 2}
   - {fileID: 11400000, guid: 5906ecd703ae9c74db5382a90e8528f1, type: 2}
-  cleanlinessThreshold: 75
-  empathyThreshold: 85
+  cleanlinessThreshold: 70
+  empathyThreshold: 80
   mapMin: {x: -22.5, y: -22.5}
   mapMax: {x: 22.5, y: 22.5}
   spawnArea:

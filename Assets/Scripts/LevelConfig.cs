@@ -15,6 +15,7 @@ public class LevelConfig : ScriptableObject
     public float npcSpawnIntervalMax = 60f;
     public int maxActiveNPCs = 3;
     public float trashPickingDuration = 3f;
+    public float miniGameDuration = 15f;
     
     [Header("NPC Data")]
     public List<NPCData> npcTypes;
