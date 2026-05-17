@@ -18,7 +18,7 @@
             </ui:VisualElement>
             <ui:Button name="CloseSettingsButton" style="width: 240px; height: 94px; background-image: url(&quot;project://database/Assets/Textures/UI/back_button.png?fileID=21300000&amp;guid=a1801830b62c7384cbfb8060387744af&amp;type=3#back_button&quot;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0, 0, 0, 0); border-width: 0;"/>
         </ui:VisualElement>
-        <ui:VisualElement name="HowToPlayPanel" style="display: none; position: absolute; width: 100%; height: 100%; background-image: url(&quot;project://database/Assets/Textures/UI/how_to_play_menu.png?fileID=21300000&amp;guid=8b49dc005e33bb44896cbb2425bb3152&amp;type=3#how_to_play_menu&quot;); -unity-background-scale-mode: scale-and-crop; justify-content: flex-end; align-items: center; padding-bottom: 60px;">
+        <ui:VisualElement name="HowToPlayPanel" style="display: none; position: absolute; width: 100%; height: 100%; background-image: url(&quot;project://database/Assets/Textures/UI/how_to_play_menu_2.png?fileID=21300000&amp;guid=913273623c793dd429e31ab6b2d3a106&amp;type=3#how_to_play_menu_2&quot;); -unity-background-scale-mode: scale-and-crop; justify-content: flex-end; align-items: center; padding-bottom: 60px; padding-left: 50%;">
             <ui:Button name="CloseHowToPlayButton" style="width: 240px; height: 94px; background-image: url(&quot;project://database/Assets/Textures/UI/back_button.png?fileID=21300000&amp;guid=a1801830b62c7384cbfb8060387744af&amp;type=3#back_button&quot;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(0, 0, 0, 0); border-width: 0;"/>
         </ui:VisualElement>
     </ui:VisualElement>
