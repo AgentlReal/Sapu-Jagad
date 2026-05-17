@@ -27,4 +27,8 @@ public class LevelConfig : ScriptableObject
     public Vector2 mapMin = new Vector2(-17.5f, -17.5f);
     public Vector2 mapMax = new Vector2(17.5f, 17.5f);
     public Rect spawnArea = new Rect(-10, -10, 20, 20);
+
+    [Header("Wall Layout")]
+    [Tooltip("Prefab containing all NPCWall colliders for this level")]
+    public GameObject wallLayoutPrefab;
 }

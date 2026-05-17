@@ -83,6 +83,28 @@ public class GameManager : MonoBehaviour
         {
             camFollow.SetBounds(currentLevelConfig.mapMin, currentLevelConfig.mapMax);
         }
+
+        // Swap wall layout
+        ApplyWallLayout();
+    }
+
+    private void ApplyWallLayout()
+    {
+        if (currentLevelConfig.wallLayoutPrefab == null) return;
+
+        // Destroy all existing NPCWall objects
+        int npcWallLayer = LayerMask.NameToLayer("NPCWall");
+        var allObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+        foreach (var obj in allObjects)
+        {
+            if (obj.layer == npcWallLayer)
+            {
+                Destroy(obj);
+            }
+        }
+
+        // Instantiate the level-specific wall layout
+        Instantiate(currentLevelConfig.wallLayoutPrefab, Vector3.zero, Quaternion.identity);
     }
 
     private void Update()

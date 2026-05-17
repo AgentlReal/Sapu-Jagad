@@ -47,6 +47,13 @@ public class Spawner : MonoBehaviour
                 npcTypes = config.npcTypes;
         }
 
+        // Delay spawn by one frame so wall prefab colliders are registered in physics
+        StartCoroutine(DelayedSpawnRoutine());
+    }
+
+    private IEnumerator DelayedSpawnRoutine()
+    {
+        yield return new WaitForFixedUpdate();
         SpawnInitialTrash();
         StartCoroutine(SpawnNPCRoutine());
     }
@@ -76,7 +83,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    private Vector2 GetValidSpawnPos()
+    public Vector2 GetValidSpawnPos()
     {
         Vector2 pos;
         int attempts = 0;
@@ -152,7 +159,7 @@ public class Spawner : MonoBehaviour
     /// Tries to nudge a position out of a wall by testing nearby offsets.
     /// Searches in expanding rings around the original point, staying within the spawn area.
     /// </summary>
-    private Vector2 NudgeToValidPosition(Vector2 pos)
+    public Vector2 NudgeToValidPosition(Vector2 pos)
     {
         float[] offsets = { 0.5f, 1f, 1.5f, 2f, 3f, 4f };
         Vector2[] directions = {

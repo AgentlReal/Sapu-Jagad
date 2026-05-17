@@ -35,3 +35,4 @@ MonoBehaviour:
     y: -15
     width: 30
     height: 30
+  wallLayoutPrefab: {fileID: 3742097037018976385, guid: 6bf0aa87416f25f49862e81d6a467d65, type: 3}

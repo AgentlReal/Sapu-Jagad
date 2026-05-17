@@ -113,8 +113,17 @@ public class NPCBehavior : MonoBehaviour
     {
         if (_trashPrefab != null)
         {
-            GameObject trash = Instantiate(_trashPrefab, transform.position, Quaternion.identity);
-            // Assign random sprite variant
+            Vector2 spawnPos = transform.position;
+            // Nudge out of wall if needed
+            if (_spawner != null)
+            {
+                int wallMask = LayerMask.GetMask("NPCWall");
+                if (Physics2D.OverlapPoint(spawnPos, wallMask) != null)
+                {
+                    spawnPos = _spawner.NudgeToValidPosition(spawnPos);
+                }
+            }
+            GameObject trash = Instantiate(_trashPrefab, spawnPos, Quaternion.identity);
             if (Spawner.Instance != null)
             {
                 Spawner.Instance.AssignRandomTrashSprite(trash);
@@ -154,10 +163,16 @@ public class NPCBehavior : MonoBehaviour
                 player.ApplyStun(7f);
                 break;
             case NPCType.AnakKecil:
+                int wallMask = LayerMask.GetMask("NPCWall");
                 for(int i=0; i<5; i++) {
                     Vector3 offset = Random.insideUnitCircle * 2f;
-                    GameObject trash = Instantiate(_trashPrefab, player.transform.position + offset, Quaternion.identity);
-                    // Assign random sprite variant to penalty trash
+                    Vector2 trashPos = (Vector2)(player.transform.position + offset);
+                    // Nudge out of wall if needed
+                    if (_spawner != null && Physics2D.OverlapPoint(trashPos, wallMask) != null)
+                    {
+                        trashPos = _spawner.NudgeToValidPosition(trashPos);
+                    }
+                    GameObject trash = Instantiate(_trashPrefab, trashPos, Quaternion.identity);
                     if (Spawner.Instance != null)
                     {
                         Spawner.Instance.AssignRandomTrashSprite(trash);

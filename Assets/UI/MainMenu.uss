@@ -1,0 +1,35 @@
+/* Main Menu Button Effects */
+
+/* All image buttons share these hover/active states */
+#PlayButton,
+#HowToPlayButton,
+#SettingsButton,
+#ExitButton,
+#CloseSettingsButton,
+#CloseHowToPlayButton {
+    transition-property: scale, opacity;
+    transition-duration: 0.15s, 0.15s;
+    transition-timing-function: ease-in-out, ease-in-out;
+    scale: 1 1;
+    opacity: 1;
+}
+
+#PlayButton:hover,
+#HowToPlayButton:hover,
+#SettingsButton:hover,
+#ExitButton:hover,
+#CloseSettingsButton:hover,
+#CloseHowToPlayButton:hover {
+    scale: 1.08 1.08;
+    opacity: 0.85;
+}
+
+#PlayButton:active,
+#HowToPlayButton:active,
+#SettingsButton:active,
+#ExitButton:active,
+#CloseSettingsButton:active,
+#CloseHowToPlayButton:active {
+    scale: 0.95 0.95;
+    opacity: 0.7;
+}

@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <ui:Style src="project://database/Assets/UI/MainMenu.uss" />
     <ui:VisualElement name="MainMenuRoot" style="flex-grow: 1; background-image: url('project://database/Assets/Textures/UI/main_menu.png'); -unity-background-scale-mode: scale-and-crop; justify-content: center; align-items: center;">
         
         <ui:VisualElement name="MenuButtons" style="align-items: center; margin-top: 80px;">
