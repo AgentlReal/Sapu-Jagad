@@ -1,4 +1,4 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <ui:VisualElement name="MiniGameOverlay" picking-mode="Position" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center;">
         <ui:VisualElement name="Panel" picking-mode="Position" style="width: 800px; padding: 30px; background-color: white; border-radius: 10px; flex-direction: row;">
             <!-- Left Side: NPC Portrait -->
@@ -13,6 +13,12 @@
                 <ui:Label name="CurrentSentence" picking-mode="Position" text="..." style="font-size: 24px; color: green; -unity-text-align: middle-center; margin-bottom: 20px; white-space: normal;" />
                 <ui:VisualElement name="WordContainer" picking-mode="Position" style="flex-direction: row; flex-wrap: wrap; justify-content: center;" />
                 <ui:Label name="MiniTimer" picking-mode="Position" text="10" style="font-size: 30px; color: red; -unity-text-align: middle-center; margin-top: 20px;" />
+                
+                <!-- Action Buttons Row -->
+                <ui:VisualElement name="ActionButtons" style="flex-direction: row; justify-content: center; margin-top: 15px;">
+                    <ui:Button name="ResetButton" text="Reset" style="font-size: 16px; padding: 8px 20px; margin-right: 15px; background-color: #ff9800; color: white; border-radius: 5px; border-width: 0;" />
+                    <ui:Button name="UsirButton" text="Usir" style="font-size: 16px; padding: 8px 20px; background-color: #e53935; color: white; border-radius: 5px; border-width: 0;" />
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

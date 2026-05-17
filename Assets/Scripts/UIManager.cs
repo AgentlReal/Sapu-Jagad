@@ -29,6 +29,8 @@ public class UIManager : MonoBehaviour
     private Label currentSentenceLabel;
     private Label hintLabel;
     private Image npcPortrait;
+    private Button resetButton;
+    private Button usirButton;
 
     // Evaluation Elements
     private VisualElement evaluationOverlay;
@@ -42,6 +44,8 @@ public class UIManager : MonoBehaviour
 
     private List<string> targetWords;
     private List<string> currentAttempt;
+    private List<string> scrambledWords;
+    private TeguranData currentTeguranData;
     private float miniTimer;
     private NPCBehavior currentNPC;
     private bool isMiniGameActive = false;
@@ -64,6 +68,14 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        // Auto-scale minimap coverage from LevelConfig map bounds
+        if (GameManager.Instance != null && GameManager.Instance.currentLevelConfig != null)
+        {
+            var cfg = GameManager.Instance.currentLevelConfig;
+            minimapCoverageWidth = cfg.mapMax.x - cfg.mapMin.x;
+            minimapCoverageHeight = cfg.mapMax.y - cfg.mapMin.y;
+        }
+
         InitializeUI();
     }
 
@@ -120,6 +132,22 @@ public class UIManager : MonoBehaviour
             currentSentenceLabel = miniGameOverlay.Q<Label>("CurrentSentence");
             hintLabel = miniGameOverlay.Q<Label>("Hint");
             npcPortrait = miniGameOverlay.Q<Image>("NPCPortrait");
+
+            // Reset button
+            resetButton = miniGameOverlay.Q<Button>("ResetButton");
+            if (resetButton != null)
+            {
+                resetButton.clicked -= OnResetClicked;
+                resetButton.clicked += OnResetClicked;
+            }
+
+            // Usir button
+            usirButton = miniGameOverlay.Q<Button>("UsirButton");
+            if (usirButton != null)
+            {
+                usirButton.clicked -= OnUsirClicked;
+                usirButton.clicked += OnUsirClicked;
+            }
         }
 
         // Evaluation Overlay
@@ -305,6 +333,7 @@ public class UIManager : MonoBehaviour
         if (miniGameOverlay == null) return;
 
         currentNPC = npc;
+        currentTeguranData = data;
         GameManager.Instance.isInteracting = true;
         isMiniGameActive = true;
 
@@ -322,10 +351,14 @@ public class UIManager : MonoBehaviour
         if (hintLabel != null) hintLabel.text = "Hint: " + data.fullSentence;
 
         targetWords = data.fullSentence.Split(' ', System.StringSplitOptions.RemoveEmptyEntries).ToList();
-        List<string> scrambled = targetWords.OrderBy(x => Random.value).ToList();
+        PopulateWordButtons();
+    }
 
+    private void PopulateWordButtons()
+    {
+        scrambledWords = targetWords.OrderBy(x => Random.value).ToList();
         wordContainer.Clear();
-        foreach (var word in scrambled)
+        foreach (var word in scrambledWords)
         {
             Button btn = new Button { text = word };
             btn.style.marginRight = 5;
@@ -333,6 +366,22 @@ public class UIManager : MonoBehaviour
             btn.clicked += () => OnWordClicked(btn);
             wordContainer.Add(btn);
         }
+    }
+
+    private void OnResetClicked()
+    {
+        if (!isMiniGameActive) return;
+        // Reset attempt and re-shuffle words, but keep the timer running
+        currentAttempt = new List<string>();
+        currentSentenceLabel.text = "";
+        PopulateWordButtons();
+    }
+
+    private void OnUsirClicked()
+    {
+        if (!isMiniGameActive) return;
+        // Immediately lose the minigame
+        EndMiniGame(false);
     }
 
     private void OnWordClicked(Button btn)
